@@ -1,4 +1,3 @@
-#include "math/math.h"
 #include <iostream>
 
 int main()
