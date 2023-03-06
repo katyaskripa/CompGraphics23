@@ -24,6 +24,15 @@ Vec2 Vec2::operator-( const Vec2& v ) const
     return { x - v.x, y - v.y };
 }
 
+void Vec2::scale(const float s){
+    x *= s;
+    y *= s;
+}
+
+Vec2 Vec2::operator*( const float s ) const {
+    return { x * s, y * s };
+}
+
 Vec3 Vec2::operator+( const Vec3& v ) const
 {
     return v + *this;
@@ -73,6 +82,12 @@ Vec3 Vec3::operator-( const Vec2& v ) const
     return { x - v.x, y - v.y, z };
 }
 
+void Vec3::scale(const float s){
+    x *= s;
+    y *= s;
+    z *= s;
+}
+
 float Vec3::dotProduct( const Vec3& v ) const
 {
     return x * v.x + y + v.y + z + v.z;
@@ -109,4 +124,8 @@ Vec3 Vec3::operator+( const Vec2& v ) const
     return { x + v.x, y + v.y, z };
 }
 
+Vec3 Vec3::operator*( const float s ) const {
+    return { x * s, y * s, z * s };
+    
+}
 } // namespace math
