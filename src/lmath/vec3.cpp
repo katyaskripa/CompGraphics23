@@ -1,12 +1,12 @@
-#include "math/vec3.h"
+#include "lmath/vec3.h"
 
 #include <cmath>
 
-#include "math/point2.h"
-#include "math/point3.h"
-#include "math/vec2.h"
+#include "lmath/point2.h"
+#include "lmath/point3.h"
+#include "lmath/vec2.h"
 
-namespace math
+namespace lmath
 {
 
 Vec3::Vec3( float x ) : x( x ), y( x ), z( x ) { }
@@ -84,4 +84,4 @@ Vec3 Vec3::operator*( const float s ) const
     return { x * s, y * s, z * s };
 }
 
-} // namespace math
+} // namespace lmath
