@@ -3,6 +3,8 @@
 namespace math
 {
 
+struct Point2;
+struct Point3;
 struct Vec2;
 
 struct Vec3
@@ -10,6 +12,13 @@ struct Vec3
     float x;
     float y;
     float z;
+
+    explicit Vec3( float x = 0 );
+    Vec3( float x, float y );
+    Vec3( float x, float y, float z );
+    explicit Vec3( const Vec2& v );
+    explicit Vec3( const Point2& p );
+    explicit Vec3( const Point3& p );
 
     void scale( const float s );
     [[nodiscard]] Vec3 normalize() const;

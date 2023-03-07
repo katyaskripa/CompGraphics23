@@ -2,10 +2,22 @@
 
 #include <cmath>
 
+#include "math/point2.h"
+#include "math/point3.h"
 #include "math/vec3.h"
 
 namespace math
 {
+
+Vec2::Vec2( const float x ) : x( x ), y( x ) { }
+
+Vec2::Vec2( float x, float y ) : x( x ), y( y ) { }
+
+Vec2::Vec2( const Vec3& v ) : x( v.x ), y( v.y ) { }
+
+Vec2::Vec2( const Point2& p ) : x( p.x ), y( p.y ) { }
+
+Vec2::Vec2( const Point3& p ) : x( p.x ), y( p.y ) { }
 
 Vec2 Vec2::operator+( const Vec2& v ) const
 {
