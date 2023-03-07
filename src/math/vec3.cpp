@@ -36,7 +36,8 @@ Vec3 Vec3::operator-( const Vec2& v ) const
     return { x - v.x, y - v.y, z };
 }
 
-void Vec3::scale(const float s){
+void Vec3::scale( const float s )
+{
     x *= s;
     y *= s;
     z *= s;
@@ -78,9 +79,9 @@ Vec3 Vec3::operator+( const Vec2& v ) const
     return { x + v.x, y + v.y, z };
 }
 
-Vec3 Vec3::operator*( const float s ) const {
+Vec3 Vec3::operator*( const float s ) const
+{
     return { x * s, y * s, z * s };
-    
 }
 
 } // namespace math

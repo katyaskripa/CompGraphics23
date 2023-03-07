@@ -22,4 +22,29 @@ Point2 Point2::operator+( const Vec2& v ) const
     return { x + v.x, y + v.y };
 }
 
+Point3 Point2::operator+( const Vec3& v ) const
+{
+    return { x + v.x, y + v.y, v.z };
+}
+
+Point2 Point2::operator-( const Vec2& v ) const
+{
+    return { x - v.x, y - v.y };
+}
+
+Point2 Point2::operator+( const Point2& p ) const
+{
+    return { x + p.x, y + p.y };
+}
+
+Point3 Point2::operator+( const Point3& p ) const
+{
+    return p + *this;
+}
+
+Point2 Point2::operator-( const Point2& p ) const
+{
+    return { x - p.x, y - p.y };
+}
+
 } // namespace math

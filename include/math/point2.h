@@ -19,6 +19,11 @@ struct Point2
     explicit Point2( const Vec3& v );
 
     Point2 operator+( const Vec2& v ) const;
+    Point3 operator+( const Vec3& v ) const;
+    Point2 operator-( const Vec2& v ) const;
+    Point2 operator+( const Point2& p ) const;
+    Point3 operator+( const Point3& p ) const;
+    Point2 operator-( const Point2& p ) const;
 };
 
 } // namespace math
