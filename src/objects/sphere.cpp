@@ -2,7 +2,7 @@
 
 #include <cmath>
 
-namespace objects
+namespace obj
 {
 
 Sphere::Sphere( const float radius, const lmath::Point3& position )
@@ -22,14 +22,14 @@ bool Sphere::hit( const render::Ray& ray,
     const auto b = 2.0f * origin.dotProduct( ray.direction );
     const auto c = origin.dotProduct( origin ) - radius * radius;
 
-    const auto discriminant = b * b - 4.0f * a * c;
+    const auto discriminant{ b * b - 4.0f * a * c };
 
     if ( discriminant > 0.0f )
     {
-        const auto root        = std::sqrt( discriminant );
+        const auto root{ std::sqrt( discriminant ) };
         const auto denominator = ( 2.0f * a );
 
-        auto t = ( -b - root ) / denominator;
+        auto t{ ( -b - root ) / denominator };
         if ( t < tmax && t > tmin )
         {
             hit.distance     = t;
@@ -56,4 +56,4 @@ lmath::Normal Sphere::getNormal( const lmath::Point3& p ) const
     return lmath::Normal( position, p ).normalize();
 }
 
-} // namespace objects
+} // namespace obj

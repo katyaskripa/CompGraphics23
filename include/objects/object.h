@@ -4,7 +4,7 @@
 #include "render/hit_record.h"
 #include "render/ray.h"
 
-namespace objects
+namespace obj
 {
 
 struct Object
@@ -17,4 +17,4 @@ struct Object
     [[nodiscard]] virtual lmath::Normal getNormal( const lmath::Point3& p ) const = 0;
 };
 
-} // namespace objects
+} // namespace obj

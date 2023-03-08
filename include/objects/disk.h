@@ -2,14 +2,14 @@
 
 #include "object.h"
 
-namespace objects
+namespace obj
 {
 
 struct Disk : Object
 {
-    float radius = 1.0f;
-    lmath::Normal normal;
-    lmath::Point3 position;
+    float radius{ 1.0f };
+    lmath::Normal normal{};
+    lmath::Point3 position{};
 
     Disk( float radius, const lmath::Normal& normal, const lmath::Point3& position );
 
@@ -19,4 +19,4 @@ struct Disk : Object
     [[nodiscard]] lmath::Normal getNormal( const lmath::Point3& p ) const override;
 };
 
-} // namespace objects
+} // namespace obj

@@ -2,13 +2,13 @@
 
 #include "object.h"
 
-namespace objects
+namespace obj
 {
 
 struct Plane : Object
 {
-    lmath::Normal normal;
-    lmath::Point3 position;
+    lmath::Normal normal{};
+    lmath::Point3 position{};
 
     Plane( const lmath::Normal& normal, const lmath::Point3& position );
 
@@ -18,4 +18,4 @@ struct Plane : Object
     [[nodiscard]] lmath::Normal getNormal( const lmath::Point3& p ) const override;
 };
 
-} // namespace objects
+} // namespace obj

@@ -8,8 +8,8 @@ namespace render
 
 struct Ray
 {
-    lmath::Point3 origin;
-    lmath::Vec3 direction;
+    lmath::Point3 origin{};
+    lmath::Vec3 direction{};
 };
 
 } // namespace render

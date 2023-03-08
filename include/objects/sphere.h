@@ -2,13 +2,13 @@
 
 #include "object.h"
 
-namespace objects
+namespace obj
 {
 
 struct Sphere : public Object
 {
-    float radius = 1.0f;
-    lmath::Point3 position;
+    float radius{ 1.0f };
+    lmath::Point3 position{};
 
     Sphere( float radius, const lmath::Point3& position );
 
@@ -18,4 +18,4 @@ struct Sphere : public Object
     [[nodiscard]] lmath::Normal getNormal( const lmath::Point3& p ) const override;
 };
 
-} // namespace objects
+} // namespace obj

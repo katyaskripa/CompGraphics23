@@ -1,6 +1,6 @@
 #include "objects/plane.h"
 
-namespace objects
+namespace obj
 {
 
 Plane::Plane( const lmath::Normal& normal, const lmath::Point3& position )
@@ -16,8 +16,8 @@ bool Plane::hit( const render::Ray& ray,
 {
     const lmath::Vec3 origin{ ray.origin, position };
 
-    const auto denominator = ray.direction.dotProduct( normal );
-    const auto t           = origin.dotProduct( normal ) / denominator;
+    const auto denominator{ ray.direction.dotProduct( normal ) };
+    const auto t{ origin.dotProduct( normal ) / denominator };
 
     if ( t < tmax && t > tmin )
     {
@@ -35,4 +35,4 @@ lmath::Normal Plane::getNormal( const lmath::Point3& p ) const
     return normal;
 }
 
-} // namespace objects
+} // namespace obj
