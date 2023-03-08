@@ -16,7 +16,7 @@ bool Sphere::hit( const render::Ray& ray,
                   const float tmax,
                   render::HitRecord& hit ) const
 {
-    const lmath::Vec3 origin{ ray.origin - position };
+    const lmath::Vec3 origin{ position, ray.origin };
 
     const auto a = ray.direction.dotProduct( ray.direction );
     const auto b = 2.0f * origin.dotProduct( ray.direction );
@@ -51,9 +51,9 @@ bool Sphere::hit( const render::Ray& ray,
     return false;
 }
 
-lmath::Vec3 Sphere::getNormal( const lmath::Point3& p ) const
+lmath::Normal Sphere::getNormal( const lmath::Point3& p ) const
 {
-    return lmath::Vec3( p - position ).normalize();
+    return lmath::Normal( position, p ).normalize();
 }
 
 } // namespace objects

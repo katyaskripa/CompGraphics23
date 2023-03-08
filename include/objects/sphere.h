@@ -15,7 +15,7 @@ struct Sphere : public Object
     bool
     hit( const render::Ray& ray, float tmin, float tmax, render::HitRecord& hit ) const override;
 
-    [[nodiscard]] lmath::Vec3 getNormal( const lmath::Point3& p ) const override;
+    [[nodiscard]] lmath::Normal getNormal( const lmath::Point3& p ) const override;
 };
 
 } // namespace objects

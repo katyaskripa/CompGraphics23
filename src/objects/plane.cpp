@@ -3,7 +3,7 @@
 namespace objects
 {
 
-Plane::Plane( const lmath::Vec3& normal, const lmath::Point3& position )
+Plane::Plane( const lmath::Normal& normal, const lmath::Point3& position )
     : normal( normal )
     , position( position )
 {
@@ -14,7 +14,7 @@ bool Plane::hit( const render::Ray& ray,
                  const float tmax,
                  render::HitRecord& hit ) const
 {
-    const lmath::Vec3 origin{ position - ray.origin };
+    const lmath::Vec3 origin{ ray.origin, position };
 
     const auto denominator = ray.direction.dotProduct( normal );
     const auto t           = origin.dotProduct( normal ) / denominator;
@@ -30,7 +30,7 @@ bool Plane::hit( const render::Ray& ray,
     return false;
 }
 
-lmath::Vec3 Plane::getNormal( const lmath::Point3& p ) const
+lmath::Normal Plane::getNormal( const lmath::Point3& p ) const
 {
     return normal;
 }

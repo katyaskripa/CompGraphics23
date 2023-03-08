@@ -10,7 +10,7 @@ struct HitRecord
 {
     float distance;
     lmath::Point3 intersection;
-    lmath::Vec3 normal;
+    lmath::Normal normal;
 };
 
 } // namespace render
