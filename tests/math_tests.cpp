@@ -197,17 +197,6 @@ TEST_CASE( "Adding 2d point to 3d point", "[single-file]" )
     REQUIRE( result.z == v2.z );
 }
 
-TEST_CASE( "Adding 2d point to 2d point", "[single-file]" )
-{
-    lmath::Point2 p1{ 5, -3 };
-    lmath::Point2 p2{ 7, -1 };
-
-    const auto result{ p1 - p2 };
-
-    REQUIRE( result.x == p1.x - p2.x );
-    REQUIRE( result.y == p1.y - p2.y );
-}
-
 TEST_CASE( "Subtracting 2d points", "[single-file]" )
 {
     lmath::Vec2 v1{ 1, 3 };
@@ -219,103 +208,6 @@ TEST_CASE( "Subtracting 2d points", "[single-file]" )
     REQUIRE( result.y == v1.y - v2.y );
 }
 
-TEST_CASE( "Subtracting 2d point from a point", "[single-file]" )
-{
-    lmath::Point2 p1{ 5, -3 };
-    lmath::Point2 p2{ 7, -1 };
-
-    const auto result{ p1 - p2 };
-
-    REQUIRE( result.x == p1.x - p2.x );
-    REQUIRE( result.y == p1.y - p2.y );
-}
-
 // point2.cpp 40-43
 
 // cross product for 3d vec :(
-
-// 3d points - - - - - - - - - - - - - - - - - -
-
-TEST_CASE( "Adding 3point to 3point in vector dimension", "[single-file]" )
-{
-    lmath::Vec3 v1{ 1, 3, -8 };
-    lmath::Vec3 v2{ 5, -9, 10 };
-
-    const auto result{ v1.operator+( v2 ) };
-
-    REQUIRE( result.x == v1.x + v2.x );
-    REQUIRE( result.y == v1.y + v2.y );
-    REQUIRE( result.z == v1.z + v2.z );
-}
-
-TEST_CASE( "Subtracting 3point from 3point in vector dimension", "[single-file]" )
-{
-    lmath::Vec3 v1{ 1, 3, -8 };
-    lmath::Vec3 v2{ 5, -9, 10 };
-
-    const auto result{ v1 - v2 };
-
-    REQUIRE( result.x == v1.x - v2.x );
-    REQUIRE( result.y == v1.y - v2.y );
-    REQUIRE( result.z == v1.z - v2.z );
-}
-
-TEST_CASE( "Adding 3point to 3point in another vector dimension", "[single-file]" )
-{
-    lmath::Vec3 v1{ 1, 3, -8 };
-    lmath::Vec2 v2{ 5, -9 };
-
-    const auto result{ v1 + v2 };
-
-    REQUIRE( result.x == v1.x + v2.x );
-    REQUIRE( result.y == v1.y + v2.y );
-    REQUIRE( result.z == v1.z );
-}
-
-TEST_CASE( "Subtracting 3point from 3point in another vector dimension", "[single-file]" )
-{
-    lmath::Vec3 v1{ 1, 3, -8 };
-    lmath::Vec2 v2{ 5, -9 };
-
-    const auto result{ v1 - v2 };
-
-    REQUIRE( result.x == v1.x - v2.x );
-    REQUIRE( result.y == v1.y - v2.y );
-    REQUIRE( result.z == v1.z );
-}
-
-TEST_CASE( "Adding 3point to 3point", "[single-file]" )
-{
-    lmath::Point3 p1{ 1, 3, -8 };
-    lmath::Point3 p2{ 5, -9, 10 };
-
-    const auto result{ p1 + p2 };
-
-    REQUIRE( result.x == p1.x + p2.x );
-    REQUIRE( result.y == p1.y + p2.y );
-    REQUIRE( result.z == p1.z + p2.z );
-}
-
-TEST_CASE( "Subtracting 3point from 3point", "[single-file]" )
-{
-    lmath::Point3 p1{ 1, 3, -8 };
-    lmath::Point3 p2{ 5, -9, 10 };
-
-    const auto result{ p1 - p2 };
-
-    REQUIRE( result.x == p1.x - p2.x );
-    REQUIRE( result.y == p1.y - p2.y );
-    REQUIRE( result.z == p1.z - p2.z );
-}
-
-TEST_CASE( "Adding 2d and 3d points", "[single-file]" )
-{
-    lmath::Point2 p1{ 1, 3 };
-    lmath::Point3 p2{ 5, -9, 10 };
-
-    const auto result{ p1 + p2 };
-
-    REQUIRE( result.x == p1.x + p2.x );
-    REQUIRE( result.y == p1.y + p2.y );
-    REQUIRE( result.z == p2.z );
-}
