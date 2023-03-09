@@ -45,7 +45,7 @@ void Vec3::scale( const float s )
 
 float Vec3::dotProduct( const Vec3& v ) const
 {
-    return x * v.x + y + v.y + z + v.z;
+    return x * v.x + y * v.y + z * v.z;
 }
 
 Vec3 Vec3::crossProduct( const Vec3& v ) const
