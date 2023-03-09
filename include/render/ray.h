@@ -6,8 +6,15 @@
 namespace render
 {
 
-struct Ray
+class Ray
 {
+public:
+    Ray() = default;
+    Ray( const lmath::Point3& origin, const lmath::Vec3& direction );
+
+    [[nodiscard]] lmath::Point3 positionAt( float t ) const;
+
+public:
     lmath::Point3 origin{};
     lmath::Vec3 direction{};
 };

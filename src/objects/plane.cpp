@@ -22,7 +22,7 @@ bool Plane::hit( const render::Ray& ray,
     if ( t < tmax && t > tmin )
     {
         hit.distance     = t;
-        hit.intersection = ray.origin + ( ray.direction * t );
+        hit.intersection = ray.positionAt( t );
         hit.normal       = normal;
         return true;
     }

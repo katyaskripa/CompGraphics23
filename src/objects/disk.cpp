@@ -22,7 +22,7 @@ bool Disk::hit( const render::Ray& ray,
 
     if ( t < tmax && t > tmin )
     {
-        hit.intersection = ray.origin + ( ray.direction * t );
+        hit.intersection = ray.positionAt( t );
         hit.normal       = normal;
         hit.distance     = t;
 
