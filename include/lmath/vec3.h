@@ -17,8 +17,7 @@ struct Vec3
     Vec3( float x, float y );
     Vec3( float x, float y, float z );
     explicit Vec3( const Vec2& v );
-    explicit Vec3( const Point2& p );
-    explicit Vec3( const Point3& p );
+    Vec3( const Point3& p1, const Point3& p2 );
 
     void scale( const float s );
     [[nodiscard]] Vec3 normalize() const;
@@ -34,5 +33,7 @@ struct Vec3
 
     static float getAngle( const Vec3& v1, const Vec3& v2 );
 };
+
+using Normal = Vec3;
 
 } // namespace lmath

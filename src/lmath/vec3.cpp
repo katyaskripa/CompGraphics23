@@ -17,9 +17,12 @@ Vec3::Vec3( float x, float y, float z ) : x( x ), y( y ), z( z ) { }
 
 Vec3::Vec3( const Vec2& v ) : x( v.x ), y( v.y ), z( 0 ) { }
 
-Vec3::Vec3( const Point2& p ) : x( p.x ), y( p.y ), z( 0 ) { }
-
-Vec3::Vec3( const Point3& p ) : x( p.x ), y( p.y ), z( p.z ) { }
+Vec3::Vec3( const Point3& p1, const Point3& p2 )
+    : x( p2.x - p1.x )
+    , y( p2.y - p1.y )
+    , z( p2.z - p1.z )
+{
+}
 
 Vec3 Vec3::operator+( const Vec3& v ) const
 {

@@ -15,9 +15,7 @@ Vec2::Vec2( float x, float y ) : x( x ), y( y ) { }
 
 Vec2::Vec2( const Vec3& v ) : x( v.x ), y( v.y ) { }
 
-Vec2::Vec2( const Point2& p ) : x( p.x ), y( p.y ) { }
-
-Vec2::Vec2( const Point3& p ) : x( p.x ), y( p.y ) { }
+Vec2::Vec2( const Point2& p1, const Point2& p2 ) : x( p2.x - p1.x ), y( p2.y - p1.y ) { }
 
 Vec2 Vec2::operator+( const Vec2& v ) const
 {
