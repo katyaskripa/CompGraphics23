@@ -23,8 +23,8 @@ bool Disk::hit( const render::Ray& ray,
     if ( t < tmax && t > tmin )
     {
         hit.intersection = ray.positionAt( t );
-        hit.normal       = normal;
         hit.distance     = t;
+        hit.normal       = normal.neg();
 
         const lmath::Vec3 distance{ hit.intersection, position };
         const auto distance2{ distance.dotProduct( distance ) };

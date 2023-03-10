@@ -87,4 +87,9 @@ Vec3 Vec3::operator*( const float s ) const
     return { x * s, y * s, z * s };
 }
 
+Vec3 Vec3::neg() const
+{
+    return *this * -1.0f;
+}
+
 } // namespace lmath

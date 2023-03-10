@@ -23,7 +23,7 @@ bool Plane::hit( const render::Ray& ray,
     {
         hit.distance     = t;
         hit.intersection = ray.positionAt( t );
-        hit.normal       = normal;
+        hit.normal       = normal.neg();
         return true;
     }
 

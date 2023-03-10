@@ -72,4 +72,9 @@ float Vec2::crossProduct( const Vec2& v ) const
     return x * v.y - y * v.x;
 }
 
+Vec2 Vec2::neg() const
+{
+    return *this * -1.0f;
+}
+
 } // namespace lmath

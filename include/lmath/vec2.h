@@ -18,6 +18,7 @@ struct Vec2
     Vec2( const Point2& p1, const Point2& p2 );
 
     void scale( const float s );
+    [[nodiscard]] Vec2 neg() const;
     [[nodiscard]] Vec2 normalize() const;
     [[nodiscard]] float dotProduct( const Vec2& v ) const;
     [[nodiscard]] float getLength() const;

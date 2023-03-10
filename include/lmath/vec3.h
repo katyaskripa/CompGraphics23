@@ -20,6 +20,7 @@ struct Vec3
     Vec3( const Point3& p1, const Point3& p2 );
 
     void scale( const float s );
+    [[nodiscard]] Vec3 neg() const;
     [[nodiscard]] Vec3 normalize() const;
     [[nodiscard]] float dotProduct( const Vec3& v ) const;
     [[nodiscard]] float getLength() const;

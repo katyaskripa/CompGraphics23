@@ -34,7 +34,7 @@ bool Sphere::hit( const render::Ray& ray,
         {
             hit.distance     = t;
             hit.intersection = ray.positionAt( t );
-            hit.normal       = getNormal( hit.intersection );
+            hit.setNormal( ray, getNormal( hit.intersection ) );
             return true;
         }
 
@@ -43,7 +43,7 @@ bool Sphere::hit( const render::Ray& ray,
         {
             hit.distance     = t;
             hit.intersection = ray.positionAt( t );
-            hit.normal       = getNormal( hit.intersection );
+            hit.setNormal( ray, getNormal( hit.intersection ) );
             return true;
         }
     }
