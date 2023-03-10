@@ -9,6 +9,7 @@ namespace render
 class Camera
 {
 public:
+    Camera() = default;
     Camera( float fov, float aspectRatio );
 
     [[nodiscard]] Ray castRay( float u, float v ) const;
@@ -16,7 +17,7 @@ public:
 private:
     lmath::Point3 position{};
     float fov{ 90.0f };
-    float aspectRatio;
+    float aspectRatio{ 1.0f };
 };
 
 } // namespace render
