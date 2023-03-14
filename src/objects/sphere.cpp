@@ -33,8 +33,8 @@ bool Sphere::hit( const render::Ray& ray,
         if ( t < tmax && t > tmin )
         {
             hit.distance     = t;
-            hit.intersection = ray.origin + ( ray.direction * t );
-            hit.normal       = getNormal( hit.intersection );
+            hit.intersection = ray.positionAt( t );
+            hit.setNormal( ray, getNormal( hit.intersection ) );
             return true;
         }
 
@@ -42,8 +42,8 @@ bool Sphere::hit( const render::Ray& ray,
         if ( t < tmax && t > tmin )
         {
             hit.distance     = t;
-            hit.intersection = ray.origin + ( ray.direction * t );
-            hit.normal       = getNormal( hit.intersection );
+            hit.intersection = ray.positionAt( t );
+            hit.setNormal( ray, getNormal( hit.intersection ) );
             return true;
         }
     }
