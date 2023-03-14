@@ -12,8 +12,8 @@ class Renderer
 {
 public:
     Renderer( float fov,
-              int imageWidth,
-              int imageHeight,
+              std::size_t imageWidth,
+              std::size_t imageHeight,
               float nearClip = 0.001f,
               float farClip  = 100.0f );
 
@@ -30,14 +30,14 @@ private:
     Camera camera;
     obj::Scene scene{};
 
-    int imageWidth;
-    int imageHeight;
+    std::size_t imageWidth;
+    std::size_t imageHeight;
 
     float nearClip;
     float farClip;
 
 private:
-    [[nodiscard]] static float rasterToWorldSpace( int coord, int imageSize );
+    [[nodiscard]] static float rasterToWorldSpace( std::size_t coord, std::size_t imageSize );
 
     [[nodiscard]] std::string trace( float u, float v ) const;
     [[nodiscard]] float getLightingCoefficient( const lmath::Normal& normal ) const;

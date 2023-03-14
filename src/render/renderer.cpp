@@ -7,8 +7,8 @@ namespace render
 {
 
 Renderer::Renderer( const float fov,
-                    const int imageWidth,
-                    const int imageHeight,
+                    const std::size_t imageWidth,
+                    const std::size_t imageHeight,
                     const float nearClip,
                     const float farClip )
     : camera( fov, (float) imageWidth / (float) imageHeight )
@@ -48,9 +48,9 @@ void Renderer::render() const
 {
     std::cout << std::endl;
 
-    for ( int y = 0; y < imageHeight; y++ )
+    for ( std::size_t y = 0; y < imageHeight; y++ )
     {
-        for ( int x = 0; x < imageWidth; x++ )
+        for ( std::size_t x = 0; x < imageWidth; x++ )
         {
             const auto u{ rasterToWorldSpace( x, imageWidth ) };
             const auto v{ rasterToWorldSpace( y, imageWidth ) };
@@ -62,7 +62,7 @@ void Renderer::render() const
     }
 }
 
-float Renderer::rasterToWorldSpace( int coord, int imageSize )
+float Renderer::rasterToWorldSpace( std::size_t coord, std::size_t imageSize )
 {
     const auto worldCoord{ (float) coord / (float) imageSize };
     return worldCoord * 2.0f - 1.0f;
@@ -72,7 +72,7 @@ std::string Renderer::trace( const float u, const float v ) const
 {
     const auto ray{ camera.castRay( u, v ) };
 
-    bool hasHit{ false };
+    bool hasHit{};
     HitRecord closestHit;
     closestHit.distance = std::numeric_limits< float >::max();
     for ( const auto& object : scene.objects )

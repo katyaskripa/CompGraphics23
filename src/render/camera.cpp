@@ -17,7 +17,7 @@ Ray Camera::castRay( const float u, const float v ) const
     const auto h{ std::tan( theta / 2 ) };
     const auto w{ h * aspectRatio };
 
-    return { position, lmath::Vec3( u * w, v * h, -1.0f ).normalize() };
+    return { position, lmath::Vec3{ u * w, v * h, -1.0f }.normalize() };
 }
 
 } // namespace render

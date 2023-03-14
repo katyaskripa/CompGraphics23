@@ -14,8 +14,8 @@ int main()
         std::make_shared< obj::Sphere >( 0.5f, lmath::Point3( -1.0f, 0.0f, -3.0f ) ) );
     renderer.getScene().objects.push_back(
         std::make_shared< obj::Disk >( 0.5f,
-                                       lmath::Normal( 0.0f, 1.0f, 0.5f ).normalize(),
-                                       lmath::Point3( 0.0f, 0.0f, -2.0f ) ) );
+                                       lmath::Normal{ 0.0f, 1.0f, 0.5f }.normalize(),
+                                       lmath::Point3{ 0.0f, 0.0f, -2.0f } ) );
 
     renderer.render();
 }
