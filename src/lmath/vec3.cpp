@@ -9,18 +9,18 @@
 namespace lmath
 {
 
-Vec3::Vec3( float x ) : x( x ), y( x ), z( x ) { }
+Vec3::Vec3( float x ) : x{ x }, y{ x }, z{ x } { }
 
-Vec3::Vec3( float x, float y ) : x( x ), y( y ), z( 0 ) { }
+Vec3::Vec3( float x, float y ) : x{ x }, y{ y }, z{ 0 } { }
 
-Vec3::Vec3( float x, float y, float z ) : x( x ), y( y ), z( z ) { }
+Vec3::Vec3( float x, float y, float z ) : x{ x }, y{ y }, z{ z } { }
 
-Vec3::Vec3( const Vec2& v ) : x( v.x ), y( v.y ), z( 0 ) { }
+Vec3::Vec3( const Vec2& v ) : x{ v.x }, y{ v.y }, z{ 0 } { }
 
 Vec3::Vec3( const Point3& p1, const Point3& p2 )
-    : x( p2.x - p1.x )
-    , y( p2.y - p1.y )
-    , z( p2.z - p1.z )
+    : x{ p2.x - p1.x }
+    , y{ p2.y - p1.y }
+    , z{ p2.z - p1.z }
 {
 }
 
