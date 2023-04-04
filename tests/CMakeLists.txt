@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.22)
 project(Tests)
 
 enable_testing()
-set(SEPARATE_TESTS_FILES math_tests.cpp)
+set(SEPARATE_TESTS_FILES math_tests.cpp sphere_tests.cpp plane_tests.cpp)
 
 string( REPLACE ".cpp" "" BASENAMES_IDIOMATIC_TESTS_FILES "${SEPARATE_TESTS_FILES}" )
 

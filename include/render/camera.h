@@ -15,9 +15,9 @@ public:
     [[nodiscard]] Ray castRay( float u, float v ) const;
 
 private:
-    lmath::Point3 position{};
-    float fov{ 90.0f };
-    float aspectRatio{ 1.0f };
+    lmath::Point3 position_{};
+    float fov_{ 90.0f };
+    float aspectRatio_{ 1.0f };
 };
 
 } // namespace render

@@ -27,14 +27,14 @@ public:
     void render() const;
 
 private:
-    Camera camera;
-    obj::Scene scene{};
+    Camera camera_;
+    obj::Scene scene_{};
 
-    std::size_t imageWidth;
-    std::size_t imageHeight;
+    std::size_t imageWidth_;
+    std::size_t imageHeight_;
 
-    float nearClip;
-    float farClip;
+    float nearClip_;
+    float farClip_;
 
 private:
     [[nodiscard]] static float rasterToWorldSpace( std::size_t coord, std::size_t imageSize );
