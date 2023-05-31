@@ -11,8 +11,8 @@ namespace icl
 class ImageIOFactory
 {
 public:
-    virtual std::unique_ptr<ImageReader> CreateImageReader() const = 0;
-    virtual std::unique_ptr<ImageWriter> CreateImageWriter() const = 0;
+    virtual std::unique_ptr< ImageReader > CreateImageReader() const = 0;
+    virtual std::unique_ptr< ImageWriter > CreateImageWriter() const = 0;
 };
 
-}
+} // namespace icl
