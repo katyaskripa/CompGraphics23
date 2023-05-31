@@ -3,7 +3,7 @@ project(ImageConverterLibrary)
 add_library(${PROJECT_NAME} STATIC)
 
 target_sources(${PROJECT_NAME} PRIVATE
-        src/bmp_reader.cpp)
+        src/bmp/bmp_reader.cpp)
 
 target_include_directories(${PROJECT_NAME}
         PRIVATE

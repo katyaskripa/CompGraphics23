@@ -1,14 +1,19 @@
 #pragma once
 
 #include <cstdint>
+#include <vector>
 
 namespace icl
 {
 
-class Image
+struct Image
 {
-private:
-    std::uint32_t buffer_;
+    virtual ~Image() = default;
+    virtual std::vector<std::uint8_t> GetData() const noexcept {
+        return data_;
+    }
+
+    std::vector<std::uint8_t> data_;
 };
 
 } // namespace icl
