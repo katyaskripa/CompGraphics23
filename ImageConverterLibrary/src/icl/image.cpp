@@ -41,4 +41,16 @@ ImageFormat::ImageFormat( const std::string& type )
     }
     type_ = kUndefined;
 }
+
+std::vector< std::uint8_t > Image::GetData() const noexcept
+{
+    std::vector< std::uint8_t > result;
+    for ( const auto& pixel : data_ )
+    {
+        result.emplace_back( pixel.r );
+        result.emplace_back( pixel.g );
+        result.emplace_back( pixel.b );
+    }
+    return result;
+}
 } // namespace icl
