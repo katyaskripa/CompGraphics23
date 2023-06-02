@@ -16,20 +16,29 @@ void PpmImage::setMagicNumber( const std::string& magic_number )
 {
     header_->magic_number = magic_number;
 }
-void PpmImage::setHeight( const std::uint64_t height )
+
+void PpmImage::setHeight( std::int32_t height ) noexcept
 {
     header_->height = height;
 }
-void PpmImage::setWidth( const std::uint64_t width )
+
+void PpmImage::setWidth( std::int32_t width ) noexcept
 {
     header_->width = width;
 }
+
 void PpmImage::setMaxValuePerColor( const std::uint8_t max_value_per_color )
 {
     header_->max_value_per_color = max_value_per_color;
 }
-void PpmImage::insertPixel( const Pixel pixel )
+
+std::int32_t PpmImage::getWidth() const noexcept
 {
-    data_.emplace_back( pixel );
+    return header_->width;
+}
+
+std::int32_t PpmImage::getHeight() const noexcept
+{
+    return header_->height;
 }
 } // namespace icl::ppm

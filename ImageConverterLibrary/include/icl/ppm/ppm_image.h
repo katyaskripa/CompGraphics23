@@ -5,15 +5,18 @@
 
 namespace icl::ppm
 {
-class PpmImage : public Image
+class PpmImage final : public Image
 {
 public:
     PpmImage();
     [[nodiscard]] Header getHeader() const noexcept override;
     void setMagicNumber( const std::string& magic_number );
-    void setHeight( std::uint64_t height );
-    void setWidth( std::uint64_t width );
+
+    [[nodiscard]] std::int32_t getWidth() const noexcept override;
+    [[nodiscard]] std::int32_t getHeight() const noexcept override;
+    void setHeight( std::int32_t height ) noexcept override;
+    void setWidth( std::int32_t width ) noexcept override;
+
     void setMaxValuePerColor( std::uint8_t max_value_per_color );
-    void insertPixel( Pixel pixel );
 };
 } // namespace icl::ppm

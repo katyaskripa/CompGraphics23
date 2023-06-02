@@ -51,6 +51,15 @@ public:
     [[nodiscard]] virtual std::vector< std::uint8_t > GetData() const noexcept;
     [[nodiscard]] virtual Header getHeader() const noexcept = 0;
 
+    [[nodiscard]] virtual std::int32_t getWidth() const noexcept  = 0;
+    [[nodiscard]] virtual std::int32_t getHeight() const noexcept = 0;
+    virtual void setHeight( std::int32_t height ) noexcept        = 0;
+    virtual void setWidth( std::int32_t width ) noexcept          = 0;
+
+    [[nodiscard]] Pixel getPixel( std::size_t x, std::size_t y ) const;
+    void setPixel( std::size_t x, std::size_t y, Pixel pixel );
+    void insertPixel( Pixel pixel );
+
 protected:
     std::shared_ptr< Header > header_;
     std::vector< Pixel > data_;

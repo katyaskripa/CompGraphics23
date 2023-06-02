@@ -53,4 +53,19 @@ std::vector< std::uint8_t > Image::GetData() const noexcept
     }
     return result;
 }
+
+void Image::insertPixel( const Pixel pixel )
+{
+    data_.emplace_back( pixel );
+}
+
+Pixel Image::getPixel( std::size_t x, std::size_t y ) const
+{
+    return data_[ y * getWidth() + x ];
+}
+
+void Image::setPixel( std::size_t x, std::size_t y, Pixel pixel )
+{
+    data_[ y * getWidth() + x ] = pixel;
+}
 } // namespace icl
