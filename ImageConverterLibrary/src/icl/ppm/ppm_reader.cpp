@@ -48,12 +48,35 @@ std::shared_ptr< Image > PpmImageReader::ReadFromFile( const std::string& filepa
 
         while ( ( input_file.peek() != '\n' ) && ( input_file >> max_value_per_color ) )
             ;
-        input_file.seekg( 1, std::ios::cur );
+
+        result->setMagicNumber( format );
+        result->setWidth( width );
+        result->setHeight( height );
+        result->setMaxValuePerColor( max_value_per_color );
 
         while ( !input_file.eof() )
         {
-            Pixel pixel;
-            input_file >> pixel;
+            input_file.seekg( 1, std::ios::cur );
+            std::string r, g, b;
+
+            while ( ( input_file.peek() != '\n' ) && ( input_file.peek() != ' ' )
+                    && ( input_file >> r ) )
+                ;
+            input_file.seekg( 1, std::ios::cur );
+
+            while ( ( input_file.peek() != '\n' ) && ( input_file.peek() != ' ' )
+                    && ( input_file >> g ) )
+                ;
+            input_file.seekg( 1, std::ios::cur );
+
+            while ( ( input_file.peek() != '\n' ) && ( input_file.peek() != ' ' )
+                    && ( input_file >> b ) )
+                ;
+
+            Pixel pixel{ static_cast< std::uint8_t >( std::stoi( r ) ),
+                         static_cast< std::uint8_t >( std::stoi( g ) ),
+                         static_cast< std::uint8_t >( std::stoi( b ) ) };
+
             result->insertPixel( pixel );
         }
 
