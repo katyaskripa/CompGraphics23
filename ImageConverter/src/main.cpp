@@ -1,3 +1,4 @@
+#include <filesystem>
 #include <iostream>
 #include <memory>
 #include <string>
@@ -5,8 +6,9 @@
 #include <boost/program_options.hpp>
 #include <fmtlog/fmtlog.h>
 
-#include <icl/bmp_reader.h>
-#include <icl/ppm_reader.h>
+#include "icl/bmp/bmp_reader.h"
+#include "icl/ppm/ppm_reader.h"
+#include "icl/ppm/ppm_writer.h"
 
 namespace
 {
@@ -14,6 +16,34 @@ constexpr auto kSource{ "source" };
 constexpr auto kGoalFormat{ "goal-format" };
 constexpr auto kOutput{ "output" };
 } // namespace
+
+bool checkIfFileExists( const std::string& file_name )
+{
+    const std::filesystem::path path_to_file_name{ file_name.c_str() };
+    return std::filesystem::exists( path_to_file_name );
+}
+
+std::string getPathOfFile( const std::string& file_name )
+{
+    return file_name.substr( 0, file_name.rfind( '.' ) + 1 );
+}
+
+std::string getFileName( const std::string& file_name )
+{
+    const std::filesystem::path path_to_file_name{ file_name.c_str() };
+    const auto file{ path_to_file_name.filename().string() };
+    return file.substr( 0, file.rfind( '.' ) + 1 );
+}
+
+std::string getSeparator()
+{
+#ifdef _WIN32
+    return "\\";
+#endif
+#ifdef unix
+    return "/";
+#endif
+}
 
 std::shared_ptr< boost::program_options::options_description >
 program_options( const int argc,
@@ -30,10 +60,10 @@ program_options( const int argc,
         boost::program_options::value< std::string >( &source_file ),
         "(required) input file path to convert" )
       ( kGoalFormat,
-        boost::program_options::value< std::string >(),
+        boost::program_options::value< std::string >(&goal_format),
         "(required) output format, examples: bmp/ppm" )
       ( kOutput,
-        boost::program_options::value< std::string >(),
+        boost::program_options::value< std::string >(&output_file),
         "(optional) location to output file" )
       ( "help, h",
         boost::program_options::bool_switch( &is_help ),
@@ -65,9 +95,15 @@ int main( int argc, char** argv )
         return EXIT_SUCCESS;
     }
 
-    icl::ImageFormat image_source_format{ source_file.substr( source_file.rfind( '.' ),
-                                                              source_file.size()
-                                                                  - source_file.rfind( '.' ) ) };
+    if ( !checkIfFileExists( source_file ) )
+    {
+        loge( "Input file not found: {}", source_file );
+        return EXIT_FAILURE;
+    }
+
+    icl::ImageFormat image_source_format{ source_file.substr(
+        source_file.rfind( '.' ) + 1,
+        source_file.size() - source_file.rfind( '.' ) - 1 ) };
     if ( image_source_format == icl::ImageFormat::kUndefined )
     {
         loge( "Unsupported input format" );
@@ -85,23 +121,28 @@ int main( int argc, char** argv )
     switch ( image_source_format )
     {
         case icl::ImageFormat::kPpm:
-            reader = std::make_unique< icl::PpmImageReader >();
+            reader = std::make_unique< icl::ppm::PpmImageReader >();
             break;
         case icl::ImageFormat::kBmp:
-            reader = std::make_unique< icl::BmpImageReader >();
+            reader = std::make_unique< icl::bmp::BmpImageReader >();
             break;
         default:
             loge( "Unknown input format" );
             return EXIT_FAILURE;
     }
+    const auto image{ reader->ReadFromFile( source_file ) };
 
-    reader->ReadFromFile( source_file );
+    if ( !image )
+    {
+        loge( "Image is not read properly. Cannot write" );
+        return EXIT_FAILURE;
+    }
 
-    // writer here
+    std::unique_ptr< icl::ImageWriter > writer;
     switch ( image_goal_format )
     {
         case icl::ImageFormat::kPpm:
-
+            writer = std::make_unique< icl::ppm::PpmImageWriter >();
             break;
         case icl::ImageFormat::kBmp:
             break;
@@ -109,6 +150,15 @@ int main( int argc, char** argv )
             loge( "Unknown output format" );
             return EXIT_FAILURE;
     }
+    if ( output_file.empty() )
+    {
+        output_file = getPathOfFile( source_file ) + image_goal_format.operator std::string();
+    }
+    else
+    {
+        output_file += getFileName( source_file ) + image_goal_format.operator std::string();
+    }
 
+    writer->WriteImageToFile( image, output_file );
     return EXIT_SUCCESS;
 }
