@@ -7,6 +7,7 @@
 #include <fmtlog/fmtlog.h>
 
 #include "icl/bmp/bmp_reader.h"
+#include "icl/bmp/bmp_writer.h"
 #include "icl/ppm/ppm_reader.h"
 #include "icl/ppm/ppm_writer.h"
 
@@ -146,6 +147,7 @@ int main( int argc, char** argv )
             writer = std::make_unique< icl::ppm::PpmImageWriter >();
             break;
         case icl::ImageFormat::kBmp:
+            writer = std::make_unique< icl::bmp::BmpImageWriter >();
             break;
         default:
             loge( "Unknown output format" );
