@@ -21,9 +21,10 @@ void PpmImageWriter::WriteImageToFile( const std::shared_ptr< Image > image,
     output_file << header.magic_number << "\n"
                 << header.height << ' ' << header.width << '\n'
                 << header.max_value_per_color << '\n';
-    for ( const auto item : image->GetData() )
+    for ( const auto pixel : image->getData() )
     {
-        output_file << std::to_string( item ) << ' ';
+        output_file << std::to_string( pixel.r ) << ' ' << std::to_string( pixel.g ) << ' '
+                    << std::to_string( pixel.b ) << ' ';
     }
 
     output_file.close();

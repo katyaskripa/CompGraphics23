@@ -42,15 +42,33 @@ ImageFormat::ImageFormat( const std::string& type )
     type_ = kUndefined;
 }
 
-std::vector< std::uint8_t > Image::GetData() const noexcept
+std::vector< Pixel > Image::getData() const noexcept
 {
-    std::vector< std::uint8_t > result;
-    for ( const auto& pixel : data_ )
-    {
-        result.emplace_back( pixel.r );
-        result.emplace_back( pixel.g );
-        result.emplace_back( pixel.b );
-    }
-    return result;
+    return data_;
+}
+
+void Image::insertPixel( const Pixel pixel )
+{
+    data_.emplace_back( pixel );
+}
+
+Pixel Image::getPixel( std::size_t x, std::size_t y ) const
+{
+    return data_[ y * getWidth() + x ];
+}
+
+void Image::setPixel( std::size_t x, std::size_t y, Pixel pixel )
+{
+    data_[ y * getWidth() + x ] = pixel;
+}
+
+void Image::setData( const std::vector< Pixel >& data ) noexcept
+{
+    data_ = data;
+}
+
+void Image::setData( std::vector< Pixel >&& data ) noexcept
+{
+    data_ = std::move( data );
 }
 } // namespace icl

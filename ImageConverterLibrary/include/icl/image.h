@@ -48,8 +48,20 @@ class Image
 {
 public:
     virtual ~Image() = default;
-    [[nodiscard]] virtual std::vector< std::uint8_t > GetData() const noexcept;
+
     [[nodiscard]] virtual Header getHeader() const noexcept = 0;
+
+    [[nodiscard]] virtual std::int32_t getWidth() const noexcept  = 0;
+    [[nodiscard]] virtual std::int32_t getHeight() const noexcept = 0;
+    virtual void setHeight( std::int32_t height ) noexcept        = 0;
+    virtual void setWidth( std::int32_t width ) noexcept          = 0;
+
+    [[nodiscard]] Pixel getPixel( std::size_t x, std::size_t y ) const;
+    [[nodiscard]] std::vector< Pixel > getData() const noexcept;
+    void setPixel( std::size_t x, std::size_t y, Pixel pixel );
+    void insertPixel( Pixel pixel );
+    void setData( const std::vector< Pixel >& data ) noexcept;
+    void setData( std::vector< Pixel >&& data ) noexcept;
 
 protected:
     std::shared_ptr< Header > header_;

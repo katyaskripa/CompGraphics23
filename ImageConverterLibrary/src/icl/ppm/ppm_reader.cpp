@@ -100,7 +100,8 @@ std::shared_ptr< Image > PpmImageReader::ReadFromFile( const std::string& filepa
     return {};
 }
 
-std::shared_ptr< Image > PpmImageReader::ReadFromImage( const icl::Image& image ) const
+std::shared_ptr< Image >
+PpmImageReader::ReadFromImage( const std::shared_ptr< Image >& image ) const
 {
     return {};
 }
