@@ -41,8 +41,7 @@ std::string getSeparator()
 #ifdef _WIN32
     return "\\";
 #endif
-#if defined(__unix__) || defined(__unix) || \
-    (defined(__APPLE__) && defined(__MACH__))
+#if defined( __unix__ ) || defined( __unix ) || ( defined( __APPLE__ ) && defined( __MACH__ ) )
     return "/";
 #endif
 }
@@ -141,13 +140,16 @@ int main( int argc, char** argv )
     }
 
     std::unique_ptr< icl::ImageWriter > writer;
+    std::unique_ptr< icl::ImageReader > converter;
     switch ( image_goal_format )
     {
         case icl::ImageFormat::kPpm:
-            writer = std::make_unique< icl::ppm::PpmImageWriter >();
+            writer    = std::make_unique< icl::ppm::PpmImageWriter >();
+            converter = std::make_unique< icl::ppm::PpmImageReader >();
             break;
         case icl::ImageFormat::kBmp:
-            writer = std::make_unique< icl::bmp::BmpImageWriter >();
+            writer    = std::make_unique< icl::bmp::BmpImageWriter >();
+            converter = std::make_unique< icl::bmp::BmpImageReader >();
             break;
         default:
             loge( "Unknown output format" );
@@ -162,6 +164,7 @@ int main( int argc, char** argv )
         output_file += getFileName( source_file ) + image_goal_format.operator std::string();
     }
 
-    writer->WriteImageToFile( image, output_file );
+    const auto output_image{ converter->ReadFromImage( image ) };
+    writer->WriteImageToFile( output_image, output_file );
     return EXIT_SUCCESS;
 }
