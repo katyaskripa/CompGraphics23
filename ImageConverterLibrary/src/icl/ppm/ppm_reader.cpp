@@ -28,9 +28,9 @@ std::shared_ptr< Image > PpmImageReader::ReadFromFile( const std::string& filepa
             ;
         input_file.seekg( 1, std::ios::cur );
 
-        if ( !( boost::iequals( format, "p3" ) || boost::iequals( format, "p6" ) ) )
+        if ( !boost::iequals( format, "p3" ) )
         {
-            loge( "Unsupported ppm file. This program supports only p3 and p6 format!" );
+            loge( "Unsupported ppm file. This program supports only p3 format!" );
             return {};
         }
 
