@@ -2,18 +2,16 @@
 
 #include <iostream>
 #include <limits>
+#include <utility>
 
 namespace render
 {
-
 Renderer::Renderer( const float fov,
-                    const std::size_t imageWidth,
-                    const std::size_t imageHeight,
+                    const std::shared_ptr< icl::Image >& image,
                     const float nearClip,
                     const float farClip )
-    : camera_{ fov, (float) imageWidth / (float) imageHeight }
-    , imageWidth_{ imageWidth }
-    , imageHeight_{ imageHeight }
+    : camera_{ fov, (float) image->getWidth() / (float) image->getHeight() }
+    , image_{ image }
     , nearClip_{ nearClip }
     , farClip_{ farClip }
 {
@@ -48,17 +46,17 @@ void Renderer::render() const
 {
     std::cout << '\n';
 
-    for ( std::size_t y{ 0 }; y < imageHeight_; ++y )
+    const auto image_width{ image_->getWidth() };
+    const auto image_height{ image_->getHeight() };
+    for ( std::int32_t y{ 0 }; y < image_height; ++y )
     {
-        for ( std::size_t x{ 0 }; x < imageWidth_; ++x )
+        for ( std::int32_t x{ 0 }; x < image_width; ++x )
         {
-            const auto u{ rasterToWorldSpace( x, imageWidth_ ) };
-            const auto v{ rasterToWorldSpace( y, imageHeight_ ) };
+            const auto u{ rasterToWorldSpace( x, image_width ) };
+            const auto v{ rasterToWorldSpace( y, image_height ) };
 
-            std::cout << trace( u, v );
+            image_->insertPixel( trace( u, v ) );
         }
-
-        std::cout << std::endl;
     }
 }
 
@@ -68,7 +66,7 @@ float Renderer::rasterToWorldSpace( std::size_t coord, std::size_t imageSize )
     return worldCoord * 2.0f - 1.0f;
 }
 
-std::string Renderer::trace( const float u, const float v ) const
+icl::Pixel Renderer::trace( const float u, const float v ) const
 {
     const auto ray{ camera_.castRay( u, v ) };
 
@@ -94,7 +92,7 @@ std::string Renderer::trace( const float u, const float v ) const
         return calculateColor( closestHit );
     }
 
-    return " ";
+    return { 0, 0, 0 };
 }
 
 float Renderer::getLightingCoefficient( const lmath::Normal& normal ) const
@@ -102,28 +100,11 @@ float Renderer::getLightingCoefficient( const lmath::Normal& normal ) const
     return normal.dotProduct( scene_.directionalLight.normalize() );
 }
 
-std::string Renderer::calculateColor( const HitRecord& hit ) const
+icl::Pixel Renderer::calculateColor( const HitRecord& hit ) const
 {
-    const auto lightingCoefficient{ getLightingCoefficient( hit.normal ) };
-
-    if ( lightingCoefficient > 0.8f )
-    {
-        return "\u2588"; // █
-    }
-    else if ( lightingCoefficient > 0.5f )
-    {
-        return "\u2593"; // ▓
-    }
-    else if ( lightingCoefficient > 0.2f )
-    {
-        return "\u2592"; // ▒
-    }
-    else if ( lightingCoefficient > 0.0f )
-    {
-        return "\u2591"; // ░
-    }
-
-    return " ";
+    const auto lighting_coefficient{ getLightingCoefficient( hit.normal ) };
+    const auto color_value{ static_cast< std::uint8_t >( 255 * lighting_coefficient ) };
+    return icl::Pixel{ color_value, color_value, color_value };
 }
 
 } // namespace render

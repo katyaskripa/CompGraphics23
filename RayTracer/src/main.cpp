@@ -5,7 +5,11 @@
 #include <boost/program_options.hpp>
 #include <fmtlog/fmtlog.h>
 
+#include <icl/bmp/bmp_image.h>
+#include <icl/bmp/bmp_writer.h>
 #include <icl/image.h>
+#include <icl/ppm/ppm_image.h>
+#include <icl/ppm/ppm_writer.h>
 
 #include "objects/disk.h"
 #include "objects/sphere.h"
@@ -95,7 +99,27 @@ int main( int argc, char** argv )
         return EXIT_FAILURE;
     }
 
-    render::Renderer renderer{ 90.0f, 150, 150 };
+    std::unique_ptr< icl::ImageWriter > image_writer;
+    std::shared_ptr< icl::Image > output_image;
+    switch ( image_output_format )
+    {
+        case icl::ImageFormat::kPpm:
+            image_writer = std::make_unique< icl::ppm::PpmImageWriter >();
+            output_image = std::make_shared< icl::ppm::PpmImage >();
+            break;
+        case icl::ImageFormat::kBmp:
+            image_writer = std::make_unique< icl::bmp::BmpImageWriter >();
+            output_image = std::make_shared< icl::bmp::BmpImage >();
+            break;
+        default:
+            loge( "Unknown output format" );
+            return EXIT_FAILURE;
+    }
+
+    output_image->setWidth( 640 );
+    output_image->setHeight( 480 );
+
+    render::Renderer renderer{ 60.0f, output_image };
     auto& rendererScene{ renderer.getScene() };
 
     rendererScene.directionalLight = lmath::Vec3( 0.6f, -0.8f, 0.0f ).normalize();
@@ -109,6 +133,7 @@ int main( int argc, char** argv )
                                        lmath::Point3{ 0.0f, 0.0f, -2.0f } ) );
 
     renderer.render();
+    image_writer->WriteImageToFile( output_image, output_file );
 
     return EXIT_SUCCESS;
 }
