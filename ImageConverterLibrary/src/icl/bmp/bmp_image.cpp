@@ -2,38 +2,33 @@
 
 namespace icl::bmp
 {
-BmpImage::BmpImage()
+BmpHeader BmpImage::getHeader() const noexcept
 {
-    header_ = std::make_shared< Header >();
-}
-
-Header BmpImage::getHeader() const noexcept
-{
-    return *header_;
+    return header_;
 }
 
 std::int32_t BmpImage::getWidth() const noexcept
 {
-    return header_->width;
+    return header_.width;
 }
 
 std::int32_t BmpImage::getHeight() const noexcept
 {
-    return header_->height;
+    return header_.height;
 }
 
 void BmpImage::setHeight( std::int32_t height ) noexcept
 {
-    header_->height = height;
+    header_.height = height;
 }
 
 void BmpImage::setWidth( std::int32_t width ) noexcept
 {
-    header_->width = width;
+    header_.width = width;
 }
 
 void BmpImage::setFileSize( std::uint32_t file_size ) noexcept
 {
-    header_->file_size = file_size;
+    header_.file_size = file_size;
 }
 } // namespace icl::bmp

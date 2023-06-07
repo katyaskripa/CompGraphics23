@@ -34,13 +34,13 @@ std::shared_ptr< Image > PpmImageReader::ReadFromFile( const std::string& filepa
             return {};
         }
 
-        std::uint64_t width{};
+        std::int32_t width{};
         while ( ( input_file.peek() != '\n' ) && ( input_file.peek() != ' ' )
                 && ( input_file >> width ) )
             ;
         input_file.seekg( 1, std::ios::cur );
 
-        std::uint64_t height{};
+        std::int32_t height{};
         while ( ( input_file.peek() != '\n' ) && ( input_file.peek() != ' ' )
                 && ( input_file >> height ) )
             ;
