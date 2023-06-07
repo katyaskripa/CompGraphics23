@@ -36,3 +36,9 @@
 .[o, O]ut
 .idea
 *[B, b]uild*
+
+# MacOS files
+*.DS_Store
+
+# Cache
+.cache
