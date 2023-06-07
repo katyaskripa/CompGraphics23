@@ -46,7 +46,7 @@ std::shared_ptr< Image > BmpImageReader::ReadFromFile( const std::string& filepa
         result->setWidth( header.width );
         result->setHeight( header.height );
 
-        for ( std::int32_t y{ 0 }; y < header.height; ++y )
+        for ( std::int32_t y{ header.height - 1 }; y >= 0; --y )
         {
             for ( std::int32_t x{ 0 }; x < header.width; ++x )
             {

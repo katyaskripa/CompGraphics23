@@ -19,11 +19,17 @@ void BmpImageWriter::WriteImageToFile( const std::shared_ptr< Image > image,
     const auto header{ image->getHeader() };
     output_file.write( reinterpret_cast< const char* >( &header ), sizeof( Header ) );
 
-    for ( const auto& pixel : image->getData() )
+    const auto data{ image->getData() };
+    for ( std::int32_t y{ header.height - 1 }; y >= 0; --y )
     {
-        output_file.write( reinterpret_cast< const char* >( &pixel.b ), sizeof( uint8_t ) );
-        output_file.write( reinterpret_cast< const char* >( &pixel.g ), sizeof( uint8_t ) );
-        output_file.write( reinterpret_cast< const char* >( &pixel.r ), sizeof( uint8_t ) );
+        for ( std::int32_t x{ 0 }; x < header.width; ++x )
+        {
+            const auto index{ y * header.width + x };
+            const auto pixel{ data[ index ] };
+            output_file.write( reinterpret_cast< const char* >( &pixel.b ), sizeof( uint8_t ) );
+            output_file.write( reinterpret_cast< const char* >( &pixel.g ), sizeof( uint8_t ) );
+            output_file.write( reinterpret_cast< const char* >( &pixel.r ), sizeof( uint8_t ) );
+        }
     }
 
     output_file.close();
