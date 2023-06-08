@@ -2,14 +2,14 @@
 
 #include <cstdint>
 
-namespace icl
+namespace icl::bmp
 {
 constexpr auto kBmpFileType{ 0x4D42 };
 constexpr auto kBmpDataOffset{ 54 };
 constexpr auto kBmpHeaderSize{ 40 };
 
 #pragma pack( push, 1 )
-struct Header
+struct BmpHeader
 {
     std::uint16_t file_type{ kBmpFileType };
     std::uint32_t file_size{};
@@ -28,4 +28,4 @@ struct Header
     std::uint32_t important_colors{};
 };
 #pragma pack( pop )
-} // namespace icl
+} // namespace icl::bmp

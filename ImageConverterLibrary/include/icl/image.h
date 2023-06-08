@@ -10,8 +10,6 @@
 namespace icl
 {
 
-struct Header;
-
 struct Pixel
 {
     std::uint8_t r{};
@@ -49,8 +47,6 @@ class Image
 public:
     virtual ~Image() = default;
 
-    [[nodiscard]] virtual Header getHeader() const noexcept = 0;
-
     [[nodiscard]] virtual std::int32_t getWidth() const noexcept  = 0;
     [[nodiscard]] virtual std::int32_t getHeight() const noexcept = 0;
     virtual void setHeight( std::int32_t height ) noexcept        = 0;
@@ -64,7 +60,6 @@ public:
     void setData( std::vector< Pixel >&& data ) noexcept;
 
 protected:
-    std::shared_ptr< Header > header_;
     std::vector< Pixel > data_;
 };
 

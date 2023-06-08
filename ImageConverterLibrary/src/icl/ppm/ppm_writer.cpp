@@ -4,6 +4,7 @@
 #include <fstream>
 
 #include "icl/ppm/ppm.h"
+#include "icl/ppm/ppm_image.h"
 
 namespace icl::ppm
 {
@@ -17,7 +18,7 @@ void PpmImageWriter::WriteImageToFile( const std::shared_ptr< Image > image,
         return;
     }
 
-    const auto header{ image->getHeader() };
+    const auto header{ std::dynamic_pointer_cast< PpmImage >( image )->getHeader() };
     output_file << header.magic_number << "\n"
                 << header.width << ' ' << header.height << '\n'
                 << header.max_value_per_color << '\n';

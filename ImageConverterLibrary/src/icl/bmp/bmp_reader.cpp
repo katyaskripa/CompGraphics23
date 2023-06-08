@@ -18,8 +18,8 @@ std::shared_ptr< Image > BmpImageReader::ReadFromFile( const std::string& filepa
             return {};
         }
 
-        Header header;
-        input_file.read( reinterpret_cast< char* >( &header ), sizeof( Header ) );
+        BmpHeader header;
+        input_file.read( reinterpret_cast< char* >( &header ), sizeof( BmpHeader ) );
 
         if ( header.file_type != kBmpFileType )
         {
@@ -56,7 +56,7 @@ std::shared_ptr< Image > BmpImageReader::ReadFromFile( const std::string& filepa
             }
         }
 
-        result->setFileSize( sizeof( Header ) + result->getData().size() * 3 );
+        result->setFileSize( sizeof( BmpHeader ) + result->getData().size() * 3 );
 
         input_file.close();
         return result;
@@ -79,7 +79,7 @@ BmpImageReader::ReadFromImage( const std::shared_ptr< Image >& image ) const
     result->setWidth( image->getWidth() );
     result->setHeight( image->getHeight() );
     result->setData( image->getData() );
-    result->setFileSize( sizeof( Header ) + result->getData().size() * 3 );
+    result->setFileSize( sizeof( BmpHeader ) + result->getData().size() * 3 );
     return result;
 }
 } // namespace icl::bmp

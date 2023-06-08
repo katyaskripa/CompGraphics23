@@ -1,6 +1,9 @@
 #pragma once
 
+#include <memory>
 #include <string>
+
+#include <icl/image.h>
 
 #include "camera.h"
 #include "objects/scene.h"
@@ -12,8 +15,7 @@ class Renderer
 {
 public:
     Renderer( float fov,
-              std::size_t imageWidth,
-              std::size_t imageHeight,
+              const std::shared_ptr< icl::Image >& image,
               float nearClip = 0.001f,
               float farClip  = 100.0f );
 
@@ -30,8 +32,7 @@ private:
     Camera camera_;
     obj::Scene scene_{};
 
-    std::size_t imageWidth_;
-    std::size_t imageHeight_;
+    std::shared_ptr< icl::Image > image_;
 
     float nearClip_;
     float farClip_;
@@ -39,9 +40,9 @@ private:
 private:
     [[nodiscard]] static float rasterToWorldSpace( std::size_t coord, std::size_t imageSize );
 
-    [[nodiscard]] std::string trace( float u, float v ) const;
+    [[nodiscard]] icl::Pixel trace( float u, float v ) const;
     [[nodiscard]] float getLightingCoefficient( const lmath::Normal& normal ) const;
-    [[nodiscard]] std::string calculateColor( const HitRecord& hit ) const;
+    [[nodiscard]] icl::Pixel calculateColor( const HitRecord& hit ) const;
 };
 
 } // namespace render
