@@ -9,7 +9,7 @@ namespace render
 
 struct HitRecord
 {
-    float distance;
+    float distance{};
     lmath::Point3 intersection{};
     lmath::Normal normal{};
 
