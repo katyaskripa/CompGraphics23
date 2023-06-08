@@ -1,4 +1,4 @@
-#include <filesystem>
+
 #include <iostream>
 
 #include <boost/algorithm/string.hpp>
@@ -11,6 +11,7 @@
 #include <icl/ppm/ppm_image.h>
 #include <icl/ppm/ppm_writer.h>
 
+#include "files/utils.h"
 #include "objects/sphere.h"
 #include "objects/triangle.h"
 #include "render/renderer.h"
@@ -20,7 +21,6 @@ namespace
 constexpr auto kSource{ "source" };
 constexpr auto kOutput{ "output" };
 constexpr auto kObjFileExtension{ "obj" };
-} // namespace
 
 std::shared_ptr< boost::program_options::options_description >
 program_options( const int argc,
@@ -50,17 +50,7 @@ program_options( const int argc,
     return desc;
 }
 
-bool checkIfFileExists( const std::string& file_name )
-{
-    const std::filesystem::path path_to_file_name{ file_name.c_str() };
-    return std::filesystem::exists( path_to_file_name );
-}
-
-std::string getExtension( const std::string& file_path )
-{
-    return file_path.substr( file_path.rfind( '.' ) + 1,
-                             file_path.size() - file_path.rfind( '.' ) - 1 );
-}
+} // namespace
 
 int main( int argc, char** argv )
 {
@@ -79,20 +69,20 @@ int main( int argc, char** argv )
         return EXIT_SUCCESS;
     }
 
-    const auto source_file_extension{ getExtension( source_file ) };
+    const auto source_file_extension{ files::utils::getExtension( source_file ) };
     if ( !boost::iequals( source_file_extension, kObjFileExtension ) )
     {
         loge( "Unsupported input format! Only Wavefront OBJ are supported." );
         return EXIT_FAILURE;
     }
 
-    if ( !checkIfFileExists( source_file ) )
+    if ( !files::utils::checkIfFileExists( source_file ) )
     {
         loge( "Input file not found: {}", source_file );
         return EXIT_FAILURE;
     }
 
-    icl::ImageFormat image_output_format{ getExtension( output_file ) };
+    icl::ImageFormat image_output_format{ files::utils::getExtension( output_file ) };
     if ( image_output_format == icl::ImageFormat::kUndefined )
     {
         loge( "Unsupported image output format! RayTracer support only PPM and BMP images." );
