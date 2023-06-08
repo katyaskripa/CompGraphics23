@@ -86,11 +86,11 @@ int main( int argc, char** argv )
         return EXIT_FAILURE;
     }
 
-        if ( !checkIfFileExists( source_file ) )
-        {
-            loge( "Input file not found: {}", source_file );
-            return EXIT_FAILURE;
-        }
+    if ( !checkIfFileExists( source_file ) )
+    {
+        loge( "Input file not found: {}", source_file );
+        return EXIT_FAILURE;
+    }
 
     icl::ImageFormat image_output_format{ getExtension( output_file ) };
     if ( image_output_format == icl::ImageFormat::kUndefined )

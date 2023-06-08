@@ -48,7 +48,7 @@ void Renderer::render() const
 
     const auto image_width{ image_->getWidth() };
     const auto image_height{ image_->getHeight() };
-    for ( std::int32_t y{ 0 }; y < image_height; ++y )
+    for ( std::int32_t y{ image_height - 1 }; y >= 0; --y )
     {
         for ( std::int32_t x{ 0 }; x < image_width; ++x )
         {
