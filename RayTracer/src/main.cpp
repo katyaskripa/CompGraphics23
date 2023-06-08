@@ -11,8 +11,8 @@
 #include <icl/ppm/ppm_image.h>
 #include <icl/ppm/ppm_writer.h>
 
-#include "objects/disk.h"
 #include "objects/sphere.h"
+#include "objects/triangle.h"
 #include "render/renderer.h"
 
 namespace
@@ -122,15 +122,15 @@ int main( int argc, char** argv )
     render::Renderer renderer{ 60.0f, output_image };
     auto& rendererScene{ renderer.getScene() };
 
-    rendererScene.directionalLight = lmath::Vec3( 0.6f, -0.8f, 0.0f ).normalize();
+    rendererScene.directionalLight = lmath::Vec3( 0.0f, 0.0f, 1.0f ).normalize();
     rendererScene.objects.emplace_back(
         std::make_shared< obj::Sphere >( 0.5f, lmath::Point3( 1.0f, 0.0f, -2.0f ) ) );
     rendererScene.objects.emplace_back(
         std::make_shared< obj::Sphere >( 0.5f, lmath::Point3( -1.0f, 0.0f, -3.0f ) ) );
     rendererScene.objects.emplace_back(
-        std::make_shared< obj::Disk >( 0.5f,
-                                       lmath::Normal{ 0.0f, 1.0f, 0.5f }.normalize(),
-                                       lmath::Point3{ 0.0f, 0.0f, -2.0f } ) );
+        std::make_shared< obj::Triangle >( lmath::Point3( -1.0f, 0.0f, -4.0f ),
+                                           lmath::Point3( 1.0f, 0.0f, -4.0f ),
+                                           lmath::Point3( 0.0f, 2.0f, -4.0f ) ) );
 
     renderer.render();
     image_writer->WriteImageToFile( output_image, output_file );
