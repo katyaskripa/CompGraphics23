@@ -4,6 +4,14 @@
 
 namespace lmath
 {
+Matrix4::Matrix4( const float diagonal_element )
+{
+    for ( int k = 0; k < 4; ++k )
+    {
+        data_[ k + k ] = diagonal_element;
+    }
+}
+
 Matrix4& Matrix4::multiply( const Matrix4& other )
 {
     std::array< float, 16 > C;

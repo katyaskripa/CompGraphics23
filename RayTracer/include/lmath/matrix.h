@@ -12,8 +12,8 @@ namespace lmath
 class Matrix4
 {
 public:
-    const float* dataPtr( void ) const;
-
+    Matrix4() = default;
+    Matrix4( const float diagonal_element = 1.0f );
     Matrix4& translate( const Vec3& translation );
     Matrix4& scale( const Vec3& v );
     Matrix4& rotate( float angle, const Vec3& axis );
