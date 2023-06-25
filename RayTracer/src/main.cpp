@@ -54,8 +54,7 @@ program_options( const int argc,
 
 int main( int argc, char** argv )
 {
-    files::ObjReader reader( "./random.obj" );
-    reader.read();
+    lmath::Matrix4 m{ 1.0f };
 
     std::string source_file, output_file;
     bool is_help{};

@@ -6,9 +6,14 @@ namespace lmath
 {
 Matrix4::Matrix4( const float diagonal_element )
 {
-    for ( int k = 0; k < 4; ++k )
+    for ( int i{}; i < 16; ++i )
     {
-        data_[ k + k ] = diagonal_element;
+        data_[ i ] = 0;
+    }
+
+    for ( int i{}; i < 4; ++i )
+    {
+        data_[ i * 4 ] = diagonal_element;
     }
 }
 
@@ -38,9 +43,12 @@ Matrix4& Matrix4::translate( const Vec3& v )
     float z = v.z;
 
     Matrix4 trans_matrix;
-    trans_matrix.data_ = { 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f,
-                           0.0f, 0.0f, 1.0f, 0.0f, x,    y,    z,    1.0f };
-
+    // clang-format off
+    trans_matrix.data_ = { 1.0f, 0.0f, 0.0f, 0.0f,
+                           0.0f, 1.0f, 0.0f, 0.0f,
+                           0.0f, 0.0f, 1.0f, 0.0f,
+                           x,    y,    z,    1.0f };
+    // clang-format on
     return multiply( trans_matrix );
 }
 
@@ -73,9 +81,12 @@ Matrix4& Matrix4::rotate( float angle, const Vec3& v )
 Matrix4& Matrix4::scale( const Vec3& v )
 {
     Matrix4 scaleMat;
-    scaleMat.data_ = { v.x,  0.0f, 0.0f, 0.0f, 0.0f, v.y,  0.0f, 0.0f,
-                       0.0f, 0.0f, v.z,  0.0f, 0.0f, 0.0f, 0.0f, 1.0f };
-
+    // clang-format off
+    scaleMat.data_ = { v.x,  0.0f, 0.0f, 0.0f,
+                       0.0f, v.y,  0.0f, 0.0f,
+                       0.0f, 0.0f, v.z,  0.0f,
+                       0.0f, 0.0f, 0.0f, 1.0f };
+    // clang-format on
     return multiply( scaleMat );
 }
 std::array< float, 16 > Matrix4::getData() const
