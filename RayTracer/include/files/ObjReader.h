@@ -13,6 +13,15 @@ public:
     ObjReader( std::string file_name );
     void read();
 
+public:
+    std::vector< lmath::Point3 > getVertexes() const;
+    std::vector< lmath::Vec3 > getNormals() const;
+    std::vector< std::uint32_t > getLineElements() const;
+    std::vector< std::pair< std::uint32_t, std::uint32_t > > getDoubledIndexes() const;
+    std::vector< std::tuple< std::uint32_t, std::uint32_t, std::uint32_t > >
+    getTripledIndexes() const;
+    std::vector< std::vector< std::uint32_t > > getIndexes() const;
+
 private:
     void readVertexes();
     void readNormals();

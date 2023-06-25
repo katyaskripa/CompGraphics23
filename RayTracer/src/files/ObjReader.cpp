@@ -222,4 +222,30 @@ void ObjReader::readLineElements()
         }
     }
 }
+std::vector< lmath::Point3 > ObjReader::getVertexes() const
+{
+    return vertexes_;
+}
+std::vector< lmath::Vec3 > ObjReader::getNormals() const
+{
+    return normals_;
+}
+std::vector< std::uint32_t > ObjReader::getLineElements() const
+{
+    return line_elements_;
+}
+std::vector< std::pair< std::uint32_t, std::uint32_t > > ObjReader::getDoubledIndexes() const
+{
+    return doubled_indexes_;
+}
+std::vector< std::tuple< std::uint32_t, std::uint32_t, std::uint32_t > >
+ObjReader::getTripledIndexes() const
+{
+    return tripled_indexes_;
+}
+std::vector< std::vector< std::uint32_t > > ObjReader::getIndexes() const
+{
+    return indexes_;
+}
+
 } // namespace files
