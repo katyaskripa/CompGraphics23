@@ -35,14 +35,27 @@ void ObjReader::readIndexes()
     std::string line;
     while ( getline( open_file, line ) )
     {
-        if ( line.back() == '\n' )
+        if ( line.find( ' ' ) == std::string::npos )
         {
-            line.pop_back();
+            continue;
         }
 
         if ( line.substr( 0, line.find( ' ' ) ) == "f" )
         {
-            line = line.substr( line.find( ' ' ), line.size() - line.find( ' ' ) + 1 );
+            line = line.substr( line.find( ' ' ), line.size() - line.find( ' ' ) );
+
+            while ( !line.empty()
+                    && ( line.back() == '\n' || line.back() == '\r' || line.back() == ' ' ) )
+            {
+                line.pop_back();
+            }
+            const auto it{ std::find_if( line.begin(),
+                                         line.end(),
+                                         []( const char c )
+                                         {
+                                             return c != ' ';
+                                         } ) };
+            line = std::string{ it, line.end() };
 
             if ( line.find( "//" ) != std::string::npos )
             {
@@ -51,10 +64,10 @@ void ObjReader::readIndexes()
 
                 for ( const auto& item : doubled_indexes )
                 {
-                    std::vector< std::string > splitted_indexes;
-                    boost::split( splitted_indexes, item, boost::is_any_of( "\\" ) );
-                    doubled_indexes_.emplace_back( std::stoi( splitted_indexes[ 0 ] ),
-                                                   std::stoi( splitted_indexes[ 1 ] ) );
+                    doubled_indexes_.emplace_back(
+                        std::stoi( item.substr( 0, item.find( "//" ) ) ),
+                        std::stoi( item.substr( item.find( "//" ) + 2,
+                                                item.size() - item.find( "//" ) - 2 ) ) );
                 }
             }
             else if ( line.find( "/" ) != std::string::npos )
@@ -65,7 +78,7 @@ void ObjReader::readIndexes()
                 for ( const auto& item : tripled_indexes )
                 {
                     std::vector< std::string > splitted_indexes;
-                    boost::split( splitted_indexes, item, boost::is_any_of( "\\" ) );
+                    boost::split( splitted_indexes, item, boost::is_any_of( "/" ) );
                     tripled_indexes_.emplace_back( std::stoi( splitted_indexes[ 0 ] ),
                                                    std::stoi( splitted_indexes[ 1 ] ),
                                                    std::stoi( splitted_indexes[ 2 ] ) );
@@ -78,12 +91,9 @@ void ObjReader::readIndexes()
 
                 for ( const auto& item : indexes )
                 {
-                    std::vector< std::string > splitted_item_of_indexes;
-                    boost::split( splitted_item_of_indexes, item, boost::is_any_of( "\\" ) );
-
                     std::vector< std::uint32_t > casted_items_of_indexes;
-                    casted_items_of_indexes.reserve( splitted_item_of_indexes.size() );
-                    for ( const auto& index : splitted_item_of_indexes )
+                    casted_items_of_indexes.reserve( indexes.size() );
+                    for ( const auto& index : indexes )
                     {
                         casted_items_of_indexes.push_back( std::stoi( index ) );
                     }
@@ -100,15 +110,28 @@ void ObjReader::readNormals()
     std::string line;
     while ( getline( open_file, line ) )
     {
-        line = line.substr( line.find( ' ' ), line.size() - line.find( ' ' ) + 1 );
-
-        if ( line.back() == '\n' )
+        if ( line.find( ' ' ) == std::string::npos )
         {
-            line.pop_back();
+            continue;
         }
 
         if ( line.substr( 0, line.find( ' ' ) ) == "v" )
         {
+            line = line.substr( line.find( ' ' ), line.size() - line.find( ' ' ) );
+
+            while ( !line.empty()
+                    && ( line.back() == '\n' || line.back() == '\r' || line.back() == ' ' ) )
+            {
+                line.pop_back();
+            }
+            const auto it{ std::find_if( line.begin(),
+                                         line.end(),
+                                         []( const char c )
+                                         {
+                                             return c != ' ';
+                                         } ) };
+            line = std::string{ it, line.end() };
+
             lmath::Vec3 v3;
 
             std::vector< std::string > normals;
@@ -128,15 +151,28 @@ void ObjReader::readVertexes()
     std::string line;
     while ( getline( open_file, line ) )
     {
-        line = line.substr( line.find( ' ' ), line.size() - line.find( ' ' ) + 1 );
-
-        if ( line.back() == '\n' )
+        if ( line.find( ' ' ) == std::string::npos )
         {
-            line.pop_back();
+            continue;
         }
 
         if ( line.substr( 0, line.find( ' ' ) ) == "vn" )
         {
+            line = line.substr( line.find( ' ' ), line.size() - line.find( ' ' ) );
+
+            while ( !line.empty()
+                    && ( line.back() == '\n' || line.back() == '\r' || line.back() == ' ' ) )
+            {
+                line.pop_back();
+            }
+            const auto it{ std::find_if( line.begin(),
+                                         line.end(),
+                                         []( const char c )
+                                         {
+                                             return c != ' ';
+                                         } ) };
+            line = std::string{ it, line.end() };
+
             lmath::Point3 p3;
 
             std::vector< std::string > points;
@@ -156,13 +192,27 @@ void ObjReader::readLineElements()
     std::string line;
     while ( getline( open_file, line ) )
     {
-        if ( line.back() == '\n' )
+        if ( line.find( ' ' ) == std::string::npos )
         {
-            line.pop_back();
+            continue;
         }
-
         if ( line.substr( 0, line.find( ' ' ) ) == "l" )
         {
+            line = line.substr( line.find( ' ' ), line.size() - line.find( ' ' ) );
+
+            while ( !line.empty()
+                    && ( line.back() == '\n' || line.back() == '\r' || line.back() == ' ' ) )
+            {
+                line.pop_back();
+            }
+            const auto it{ std::find_if( line.begin(),
+                                         line.end(),
+                                         []( const char c )
+                                         {
+                                             return c != ' ';
+                                         } ) };
+            line = std::string{ it, line.end() };
+
             std::vector< std::string > line_elements;
             boost::split( line_elements, line, boost::is_any_of( " " ) );
             for ( const auto& item : line_elements )
