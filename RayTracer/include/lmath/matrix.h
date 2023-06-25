@@ -13,10 +13,11 @@ class Matrix4
 {
 public:
     explicit Matrix4( const float diagonal_element = 1.0f );
-    Matrix4& translate( const Vec3& translation );
-    Matrix4& scale( const Vec3& v );
-    Matrix4& rotate( float angle, const Vec3& axis );
-    Matrix4& multiply( const Matrix4& other );
+    [[nodiscard]] Matrix4& translate( const Vec3& translation );
+    [[nodiscard]] Matrix4& scale( const Vec3& v );
+    [[nodiscard]] Matrix4& rotate( float angle, const Vec3& axis );
+    [[nodiscard]] Matrix4& multiply( const Matrix4& other );
+    [[nodiscard]] std::array< float, 16 > getData() const;
 
 private:
     std::array< float, 16 > data_;

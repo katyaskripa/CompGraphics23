@@ -78,4 +78,8 @@ Matrix4& Matrix4::scale( const Vec3& v )
 
     return multiply( scaleMat );
 }
+std::array< float, 16 > Matrix4::getData() const
+{
+    return data_;
+}
 } // namespace lmath
