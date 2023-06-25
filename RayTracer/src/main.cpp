@@ -1,4 +1,3 @@
-
 #include <iostream>
 
 #include <boost/algorithm/string.hpp>
@@ -11,6 +10,7 @@
 #include <icl/ppm/ppm_image.h>
 #include <icl/ppm/ppm_writer.h>
 
+#include "files/ObjReader.h"
 #include "files/utils.h"
 #include "objects/sphere.h"
 #include "objects/triangle.h"
@@ -54,6 +54,9 @@ program_options( const int argc,
 
 int main( int argc, char** argv )
 {
+    files::ObjReader reader( "./random.obj" );
+    reader.read();
+
     std::string source_file, output_file;
     bool is_help{};
 
