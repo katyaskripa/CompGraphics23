@@ -2,6 +2,7 @@
 
 #include <cmath>
 
+#include "lmath/matrix.h"
 #include "lmath/point2.h"
 #include "lmath/point3.h"
 #include "lmath/vec2.h"
