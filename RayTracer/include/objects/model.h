@@ -14,7 +14,7 @@ struct Model : public Object
     explicit Model( const std::vector< Triangle >& triangles );
 
     Model( const std::vector< lmath::Point3 >& vertices,
-           const std::vector< std::uint32_t >& indexes );
+           const std::vector< std::vector< std::vector< std::uint32_t > > >& indexes );
 
     bool
     hit( const render::Ray& ray, float tmin, float tmax, render::HitRecord& hit ) const override;

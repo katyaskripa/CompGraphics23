@@ -4,13 +4,13 @@ namespace obj
 {
 
 Model::Model( const std::vector< lmath::Point3 >& vertices,
-              const std::vector< std::uint32_t >& indexes )
+              const std::vector< std::vector< std::vector< std::uint32_t > > >& indexes )
 {
     for ( uint32_t i{ 0 }; i < indexes.size(); i += 3 )
     {
-        triangles_.emplace_back( vertices[ indexes[ i ] - 1 ],
-                                 vertices[ indexes[ i + 1 ] - 1 ],
-                                 vertices[ indexes[ i + 2 ] - 1 ] );
+        triangles_.emplace_back( vertices[ indexes[ i ][ 0 ][ 0 ] - 1 ],
+                                 vertices[ indexes[ i ][ 1 ][ 0 ] - 1 ],
+                                 vertices[ indexes[ i ][ 2 ][ 0 ] - 1 ] );
     }
 }
 
