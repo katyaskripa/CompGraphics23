@@ -2,6 +2,7 @@
 
 #include <cmath>
 
+#include "lmath/matrix.h"
 #include "lmath/point2.h"
 #include "lmath/point3.h"
 #include "lmath/vec2.h"
@@ -90,6 +91,20 @@ Vec3 Vec3::operator*( const float s ) const
 Vec3 Vec3::neg() const
 {
     return *this * -1.0f;
+}
+
+Vec3 Vec3::operator*( const Matrix4& m ) const
+{
+    const auto& data{ m.getData() };
+
+    // clang-format off
+    return
+    {
+        x * data[0] + y * data[4] + y * data[8],
+        x * data[1] + y * data[5] + z * data[9],
+        x * data[2] + y * data[6] + z * data[10],
+    };
+    // clang-format on
 }
 
 } // namespace lmath

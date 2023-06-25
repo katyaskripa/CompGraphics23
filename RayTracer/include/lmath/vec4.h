@@ -3,7 +3,7 @@
 namespace lmath
 {
 
-class Point4;
+struct Point4;
 class Matrix4;
 
 struct Vec4

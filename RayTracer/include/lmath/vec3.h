@@ -6,6 +6,7 @@ namespace lmath
 struct Point2;
 struct Point3;
 struct Vec2;
+class Matrix4;
 
 struct Vec3
 {
@@ -31,6 +32,7 @@ struct Vec3
     Vec3 operator-( const Vec3& v ) const;
     Vec3 operator-( const Vec2& v ) const;
     Vec3 operator*( const float s ) const;
+    Vec3 operator*( const Matrix4& m ) const;
 
     static float getAngle( const Vec3& v1, const Vec3& v2 );
 };

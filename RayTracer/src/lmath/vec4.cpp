@@ -90,5 +90,6 @@ Vec4 Vec4::operator*( const Matrix4& m ) const
     };
     // clang-format on
 }
+Vec4::Vec4( float x, float y, float z, float w ) : x{ x }, y{ y }, z{ z }, w{ w } { }
 
 } // namespace lmath
