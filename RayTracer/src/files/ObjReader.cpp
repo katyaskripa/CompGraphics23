@@ -22,15 +22,19 @@ ObjReader::ObjReader( std::string file_name ) : file_name_{ std::move( file_name
 
 void ObjReader::read()
 {
+    indexes_.clear();
+    vertexes_.clear();
+    normals_.clear();
+    line_elements_.clear();
+
     readVertexes();
     readNormals();
     readIndexes();
+    readLineElements();
 }
 
 void ObjReader::readIndexes()
 {
-    doubled_indexes_.clear();
-
     std::ifstream open_file( file_name_ );
     std::string line;
     while ( getline( open_file, line ) )
@@ -62,33 +66,48 @@ void ObjReader::readIndexes()
                 std::vector< std::string > doubled_indexes;
                 boost::split( doubled_indexes, line, boost::is_any_of( " " ) );
 
+                std::vector< std::vector< std::uint32_t > > global_indexes;
                 for ( const auto& item : doubled_indexes )
                 {
-                    doubled_indexes_.emplace_back(
-                        std::stoi( item.substr( 0, item.find( "//" ) ) ),
-                        std::stoi( item.substr( item.find( "//" ) + 2,
-                                                item.size() - item.find( "//" ) - 2 ) ) );
+                    std::vector< std::string > local_indexes;
+                    std::vector< std::uint32_t > casted_local_indexes;
+                    boost::split( local_indexes, item, boost::is_any_of( "//" ) );
+                    for ( const auto& local_index : local_indexes )
+                    {
+                        if ( !local_index.empty() )
+                        {
+                            casted_local_indexes.emplace_back( std::stoi( local_index ) );
+                        }
+                    }
+                    global_indexes.emplace_back( casted_local_indexes );
                 }
+                indexes_.emplace_back( global_indexes );
             }
             else if ( line.find( "/" ) != std::string::npos )
             {
                 std::vector< std::string > tripled_indexes;
                 boost::split( tripled_indexes, line, boost::is_any_of( " " ) );
 
+                std::vector< std::vector< std::uint32_t > > global_indexes;
                 for ( const auto& item : tripled_indexes )
                 {
-                    std::vector< std::string > splitted_indexes;
-                    boost::split( splitted_indexes, item, boost::is_any_of( "/" ) );
-                    tripled_indexes_.emplace_back( std::stoi( splitted_indexes[ 0 ] ),
-                                                   std::stoi( splitted_indexes[ 1 ] ),
-                                                   std::stoi( splitted_indexes[ 2 ] ) );
+                    std::vector< std::string > local_indexes;
+                    std::vector< std::uint32_t > casted_local_indexes;
+                    boost::split( local_indexes, item, boost::is_any_of( "/" ) );
+                    for ( const auto& local_index : local_indexes )
+                    {
+                        casted_local_indexes.emplace_back( std::stoi( local_index ) );
+                    }
+                    global_indexes.emplace_back( casted_local_indexes );
                 }
+                indexes_.emplace_back( global_indexes );
             }
             else
             {
                 std::vector< std::string > indexes;
                 boost::split( indexes, line, boost::is_any_of( " " ) );
 
+                std::vector< std::vector< std::uint32_t > > global_indexes;
                 for ( const auto& item : indexes )
                 {
                     std::vector< std::uint32_t > casted_items_of_indexes;
@@ -97,8 +116,9 @@ void ObjReader::readIndexes()
                     {
                         casted_items_of_indexes.push_back( std::stoi( index ) );
                     }
-                    indexes_.emplace_back( casted_items_of_indexes );
+                    global_indexes.emplace_back( casted_items_of_indexes );
                 }
+                indexes_.emplace_back( global_indexes );
             }
         }
     }
@@ -115,7 +135,7 @@ void ObjReader::readNormals()
             continue;
         }
 
-        if ( line.substr( 0, line.find( ' ' ) ) == "v" )
+        if ( line.substr( 0, line.find( ' ' ) ) == "vn" )
         {
             line = line.substr( line.find( ' ' ), line.size() - line.find( ' ' ) );
 
@@ -156,7 +176,7 @@ void ObjReader::readVertexes()
             continue;
         }
 
-        if ( line.substr( 0, line.find( ' ' ) ) == "vn" )
+        if ( line.substr( 0, line.find( ' ' ) ) == "v" )
         {
             line = line.substr( line.find( ' ' ), line.size() - line.find( ' ' ) );
 
@@ -234,16 +254,8 @@ std::vector< std::uint32_t > ObjReader::getLineElements() const
 {
     return line_elements_;
 }
-std::vector< std::pair< std::uint32_t, std::uint32_t > > ObjReader::getDoubledIndexes() const
-{
-    return doubled_indexes_;
-}
-std::vector< std::tuple< std::uint32_t, std::uint32_t, std::uint32_t > >
-ObjReader::getTripledIndexes() const
-{
-    return tripled_indexes_;
-}
-std::vector< std::vector< std::uint32_t > > ObjReader::getIndexes() const
+
+std::vector< std::vector< std::vector< std::uint32_t > > > ObjReader::getIndexes() const
 {
     return indexes_;
 }
