@@ -80,4 +80,12 @@ void Triangle::translate( const lmath::Vec3& translation )
     v1        = v1 * transform;
     v2        = v2 * transform;
 }
+
+bool Triangle::firstHit( const render::Ray& ray,
+                         float tmin,
+                         float tmax,
+                         render::HitRecord& hit ) const
+{
+    return this->hit( ray, tmin, tmax, hit );
+}
 } // namespace obj

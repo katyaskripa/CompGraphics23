@@ -61,4 +61,12 @@ void Sphere::translate( const lmath::Vec3& translation )
     position = position + translation;
 }
 
+bool Sphere::firstHit( const render::Ray& ray,
+                       float tmin,
+                       float tmax,
+                       render::HitRecord& hit ) const
+{
+    return this->hit( ray, tmin, tmax, hit );
+}
+
 } // namespace obj

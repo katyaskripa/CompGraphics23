@@ -2,25 +2,30 @@
 
 #include <vector>
 
+#include "files/ObjReader.h"
 #include "object.h"
 #include "triangle.h"
-#include "files/ObjReader.h"
 
 namespace obj
 {
 struct Model : public Object
 {
-    std::vector< Triangle > triangles_;
+    std::vector< Triangle > triangles;
 
     explicit Model( const std::vector< Triangle >& triangles );
 
     Model( const std::vector< lmath::Point3 >& vertices,
            const std::vector< std::vector< std::vector< std::uint32_t > > >& indexes );
 
-    Model(const files::ObjReader& objReader);
+    explicit Model( const files::ObjReader& objReader );
 
     bool
     hit( const render::Ray& ray, float tmin, float tmax, render::HitRecord& hit ) const override;
+
+    bool firstHit( const render::Ray& ray,
+                   float tmin,
+                   float tmax,
+                   render::HitRecord& hit ) const override;
 
     [[nodiscard]] lmath::Normal getNormal( const lmath::Point3& p ) const override;
 

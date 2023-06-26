@@ -68,14 +68,14 @@ float Renderer::rasterToWorldSpace( std::size_t coord, std::size_t imageSize )
 
 icl::Pixel Renderer::trace( const float u, const float v ) const
 {
-    const auto ray{ camera_.castRay( u, v ) };
+    auto ray{ camera_.castRay( u, v ) };
 
     bool hasHit{};
     HitRecord closestHit;
+    HitRecord hit;
     closestHit.distance = std::numeric_limits< float >::max();
     for ( const auto& object : scene_.objects )
     {
-        HitRecord hit;
         if ( object->hit( ray, nearClip_, farClip_, hit ) )
         {
             hasHit = true;
@@ -89,7 +89,21 @@ icl::Pixel Renderer::trace( const float u, const float v ) const
 
     if ( hasHit )
     {
-        return calculateColor( closestHit );
+        ray.origin    = closestHit.intersection;
+        ray.direction = scene_.directionalLight;
+
+        const auto inShadow =
+            std::any_of( scene_.objects.begin(),
+                         scene_.objects.end(),
+                         [ & ]( const auto& object )
+                         {
+                             return object->firstHit( ray, nearClip_, farClip_, hit );
+                         } );
+
+        if ( !inShadow )
+        {
+            return calculateColor( closestHit );
+        }
     }
 
     return { 0, 0, 0 };
