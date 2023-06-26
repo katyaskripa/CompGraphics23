@@ -19,12 +19,22 @@ bool Model::hit( const render::Ray& ray,
                  const float tmax,
                  render::HitRecord& hit ) const
 {
-    return std::any_of( triangles_.begin(),
-                        triangles_.end(),
-                        [ & ]( const Triangle& triangle )
-                        {
-                            return triangle.hit( ray, tmin, tmax, hit );
-                        } );
+    bool hasHit{};
+    hit.distance = std::numeric_limits< float >::max();
+    for ( const auto& triangle : triangles_ )
+    {
+        render::HitRecord temp;
+        if ( triangle.hit( ray, tmin, tmax, temp ) )
+        {
+            hasHit = true;
+
+            if ( temp.distance < hit.distance )
+            {
+                hit = temp;
+            }
+        }
+    }
+    return hasHit;
 }
 
 lmath::Normal Model::getNormal( const lmath::Point3& p ) const
@@ -34,10 +44,17 @@ lmath::Normal Model::getNormal( const lmath::Point3& p ) const
 
 Model::Model( const std::vector< Triangle >& triangles ) : triangles_( triangles ) { }
 
-void Model::translate( const lmath::Vec3& translation ) {
-    for (auto& triangle : triangles_) {
-        triangle.translate(translation);
+void Model::translate( const lmath::Vec3& translation )
+{
+    for ( auto& triangle : triangles_ )
+    {
+        triangle.translate( translation );
     }
+}
+
+Model::Model( const files::ObjReader& objReader )
+    : Model( objReader.getVertexes(), objReader.getIndexes() )
+{
 }
 
 } // namespace obj
