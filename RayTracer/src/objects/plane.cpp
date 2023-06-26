@@ -35,4 +35,9 @@ lmath::Normal Plane::getNormal( const lmath::Point3& p ) const
     return normal;
 }
 
+void Plane::translate( const lmath::Vec3& translation )
+{
+    position = position + translation;
+}
+
 } // namespace obj

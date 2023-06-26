@@ -33,4 +33,11 @@ lmath::Normal Model::getNormal( const lmath::Point3& p ) const
 }
 
 Model::Model( const std::vector< Triangle >& triangles ) : triangles_( triangles ) { }
+
+void Model::translate( const lmath::Vec3& translation ) {
+    for (auto& triangle : triangles_) {
+        triangle.translate(translation);
+    }
+}
+
 } // namespace obj

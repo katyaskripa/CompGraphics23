@@ -1,5 +1,7 @@
 #include "objects/triangle.h"
 
+#include "lmath/matrix.h"
+
 namespace obj
 {
 Triangle::Triangle( const lmath::Point3& v0,
@@ -68,5 +70,14 @@ lmath::Normal Triangle::getNormal( const lmath::Point3& p ) const
     }
 
     return { normal };
+}
+
+void Triangle::translate( const lmath::Vec3& translation )
+{
+    lmath::Matrix4 transform{ 1.0f };
+    transform = transform.translate( translation );
+    v0        = v0 * transform;
+    v1        = v1 * transform;
+    v2        = v2 * transform;
 }
 } // namespace obj

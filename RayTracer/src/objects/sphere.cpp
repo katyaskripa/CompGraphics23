@@ -56,4 +56,9 @@ lmath::Normal Sphere::getNormal( const lmath::Point3& p ) const
     return lmath::Normal( position, p ).normalize();
 }
 
+void Sphere::translate( const lmath::Vec3& translation )
+{
+    position = position + translation;
+}
+
 } // namespace obj

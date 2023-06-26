@@ -39,4 +39,9 @@ lmath::Normal Disk::getNormal( const lmath::Point3& p ) const
     return normal;
 }
 
+void Disk::translate( const lmath::Vec3& translation )
+{
+    position = position + translation;
+}
+
 } // namespace obj
