@@ -13,7 +13,7 @@ Matrix4::Matrix4( const float diagonal_element )
 
     for ( int i{}; i < 4; ++i )
     {
-        data_[ i * 4 ] = diagonal_element;
+        data_[ i * 5 ] = diagonal_element;
     }
 }
 

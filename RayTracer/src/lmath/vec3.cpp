@@ -100,9 +100,9 @@ Vec3 Vec3::operator*( const Matrix4& m ) const
     // clang-format off
     return
     {
-        x * data[0] + y * data[4] + z * data[8],
-        x * data[1] + y * data[5] + z * data[9],
-        x * data[2] + y * data[6] + z * data[10],
+        x * data[0] + y * data[4] + z * data[8] + data[12],
+        x * data[1] + y * data[5] + z * data[9] + data[13],
+        x * data[2] + y * data[6] + z * data[10] + data[14],
     };
     // clang-format on
 }
