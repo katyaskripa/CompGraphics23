@@ -30,5 +30,9 @@ struct Model : public Object
     [[nodiscard]] lmath::Normal getNormal( const lmath::Point3& p ) const override;
 
     void translate( const lmath::Vec3& translation ) override;
+
+    void scale( const lmath::Vec3& scaling );
+
+    void rotate( float angle, const lmath::Vec3& axis );
 };
 } // namespace obj

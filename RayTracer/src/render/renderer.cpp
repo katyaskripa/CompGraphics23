@@ -89,6 +89,11 @@ icl::Pixel Renderer::trace( const float u, const float v ) const
 
     if ( hasHit )
     {
+        if ( lightingTurnedOff_ )
+        {
+            return { 255, 255, 255 };
+        }
+
         ray.origin    = closestHit.intersection;
         ray.direction = scene_.directionalLight;
 
@@ -119,6 +124,11 @@ icl::Pixel Renderer::calculateColor( const HitRecord& hit ) const
     const auto lighting_coefficient{ getLightingCoefficient( hit.normal ) };
     const auto color_value{ static_cast< std::uint8_t >( 255 * lighting_coefficient ) };
     return icl::Pixel{ color_value, color_value, color_value };
+}
+
+void Renderer::enableLighting( const bool toggle )
+{
+    lightingTurnedOff_ = !toggle;
 }
 
 } // namespace render

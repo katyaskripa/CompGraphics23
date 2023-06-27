@@ -6,11 +6,20 @@ namespace obj
 Model::Model( const std::vector< lmath::Point3 >& vertices,
               const std::vector< std::vector< std::vector< std::uint32_t > > >& indexes )
 {
-    for ( uint32_t i{ 0 }; i < indexes.size(); i += 3 )
+    for ( uint32_t i{ 0 }; i < indexes.size(); ++i )
     {
-        triangles.emplace_back( vertices[ indexes[ i ][ 0 ][ 0 ] - 1 ],
-                                vertices[ indexes[ i ][ 1 ][ 0 ] - 1 ],
-                                vertices[ indexes[ i ][ 2 ][ 0 ] - 1 ] );
+        auto index = indexes[ i ];
+
+        triangles.emplace_back( vertices[ index[ 0 ][ 0 ] - 1 ],
+                                vertices[ index[ 1 ][ 0 ] - 1 ],
+                                vertices[ index[ 2 ][ 0 ] - 1 ] );
+
+        if ( index.size() == 4 )
+        {
+            triangles.emplace_back( vertices[ index[ 0 ][ 0 ] - 1 ],
+                                    vertices[ index[ 2 ][ 0 ] - 1 ],
+                                    vertices[ index[ 3 ][ 0 ] - 1 ] );
+        }
     }
 }
 
@@ -65,6 +74,22 @@ bool Model::firstHit( const render::Ray& ray, float tmin, float tmax, render::Hi
                         {
                             return triangle.hit( ray, tmin, tmax, hit );
                         } );
+}
+
+void Model::scale( const lmath::Vec3& scaling )
+{
+    for ( auto& triangle : triangles )
+    {
+        triangle.scale( scaling );
+    }
+}
+
+void Model::rotate( float angle, const lmath::Vec3& axis )
+{
+    for ( auto& triangle : triangles )
+    {
+        triangle.rotate( angle, axis );
+    }
 }
 
 } // namespace obj

@@ -88,4 +88,22 @@ bool Triangle::firstHit( const render::Ray& ray,
 {
     return this->hit( ray, tmin, tmax, hit );
 }
+
+void Triangle::scale( const lmath::Vec3& scaling )
+{
+    lmath::Matrix4 transform{ 1.0f };
+    transform = transform.scale( scaling );
+    v0        = v0 * transform;
+    v1        = v1 * transform;
+    v2        = v2 * transform;
+}
+
+void Triangle::rotate( const float angle, const lmath::Vec3& axis )
+{
+    lmath::Matrix4 transform{ 1.0f };
+    transform = transform.rotate( angle, axis );
+    v0        = v0 * transform;
+    v1        = v1 * transform;
+    v2        = v2 * transform;
+}
 } // namespace obj
