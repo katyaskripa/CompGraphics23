@@ -25,6 +25,7 @@ public:
 
     void setScene( const obj::Scene& newScene );
     void setCamera( const Camera& newCamera );
+    void enableLighting( bool toggle );
 
     void render() const;
 
@@ -37,7 +38,8 @@ private:
     float nearClip_;
     float farClip_;
 
-private:
+    bool lightingTurnedOff_{};
+
     [[nodiscard]] static float rasterToWorldSpace( std::size_t coord, std::size_t imageSize );
 
     [[nodiscard]] icl::Pixel trace( float u, float v ) const;

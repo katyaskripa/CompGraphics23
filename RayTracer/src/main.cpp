@@ -12,8 +12,8 @@
 
 #include "files/ObjReader.h"
 #include "files/utils.h"
+#include "objects/model.h"
 #include "objects/sphere.h"
-#include "objects/triangle.h"
 #include "render/renderer.h"
 
 namespace
@@ -54,8 +54,6 @@ program_options( const int argc,
 
 int main( int argc, char** argv )
 {
-    lmath::Matrix4 m{ 1.0f };
-
     std::string source_file, output_file;
     bool is_help{};
 
@@ -84,6 +82,9 @@ int main( int argc, char** argv )
         return EXIT_FAILURE;
     }
 
+    files::ObjReader objReader( source_file );
+    objReader.read();
+
     icl::ImageFormat image_output_format{ files::utils::getExtension( output_file ) };
     if ( image_output_format == icl::ImageFormat::kUndefined )
     {
@@ -109,20 +110,19 @@ int main( int argc, char** argv )
     }
 
     output_image->setWidth( 640 );
-    output_image->setHeight( 480 );
+    output_image->setHeight( 360 );
 
     render::Renderer renderer{ 60.0f, output_image };
     auto& rendererScene{ renderer.getScene() };
 
-    rendererScene.directionalLight = lmath::Vec3( 0.0f, 0.0f, 1.0f ).normalize();
+    rendererScene.directionalLight = lmath::Vec3( 0.7f, 0.0f, 0.8f ).normalize();
     rendererScene.objects.emplace_back(
-        std::make_shared< obj::Sphere >( 0.5f, lmath::Point3( 1.0f, 0.0f, -2.0f ) ) );
-    rendererScene.objects.emplace_back(
-        std::make_shared< obj::Sphere >( 0.5f, lmath::Point3( -1.0f, 0.0f, -3.0f ) ) );
-    rendererScene.objects.emplace_back(
-        std::make_shared< obj::Triangle >( lmath::Point3( -1.0f, 0.0f, -4.0f ),
-                                           lmath::Point3( 1.0f, 0.0f, -4.0f ),
-                                           lmath::Point3( 0.0f, 2.0f, -4.0f ) ) );
+        std::make_shared< obj::Sphere >( 0.5f, lmath::Point3( 1.5f, 0.0f, -2.5f ) ) );
+
+    auto model = std::make_shared< obj::Model >( objReader );
+    model->rotate( 0.8f, { 0, 1, 0 } );
+    model->translate( { -0.1f, -0.3f, -3.5f } );
+    rendererScene.objects.emplace_back( model );
 
     renderer.render();
     image_writer->WriteImageToFile( output_image, output_file );

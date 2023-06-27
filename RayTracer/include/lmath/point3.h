@@ -1,5 +1,7 @@
 #pragma once
 
+#include "lmath/matrix.h"
+
 namespace lmath
 {
 
@@ -24,6 +26,7 @@ struct Point3
     Point3 operator-( const Vec3& v ) const;
     Point3 operator+( const Vec2& v ) const;
     Point3 operator-( const Vec2& v ) const;
+    Point3 operator*( const Matrix4& m ) const;
 };
 
 } // namespace lmath

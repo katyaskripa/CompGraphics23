@@ -1,18 +1,23 @@
 #pragma once
 
+#include <vector>
+
+#include "files/ObjReader.h"
 #include "object.h"
+#include "triangle.h"
 
 namespace obj
 {
-struct Triangle : public Object
+struct Model : public Object
 {
-    lmath::Point3 v0, v1, v2;
-    bool clockwise;
+    std::vector< Triangle > triangles;
 
-    Triangle( const lmath::Point3& v0,
-              const lmath::Point3& v1,
-              const lmath::Point3& v2,
-              bool clockwise = false );
+    explicit Model( const std::vector< Triangle >& triangles );
+
+    Model( const std::vector< lmath::Point3 >& vertices,
+           const std::vector< std::vector< std::vector< std::uint32_t > > >& indexes );
+
+    explicit Model( const files::ObjReader& objReader );
 
     bool
     hit( const render::Ray& ray, float tmin, float tmax, render::HitRecord& hit ) const override;
